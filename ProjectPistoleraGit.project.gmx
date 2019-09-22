@@ -39,6 +39,7 @@
     </sprites>
     <sprite>sprites\spr_pixel</sprite>
     <sprite>sprites\spr_melee_hitbox</sprite>
+    <sprite>sprites\spr_coverspot</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -89,6 +90,7 @@
       <script>scripts\array_tostring_new.gml</script>
       <script>scripts\string_toarray_new.gml</script>
       <script>scripts\array_getrow.gml</script>
+      <script>scripts\array_includes.gml</script>
     </scripts>
     <script>scripts\mp_path_to_instance.gml</script>
     <script>scripts\orbital_x.gml</script>
@@ -239,6 +241,7 @@
       <script>scripts\instance_closest_notinfaction.gml</script>
       <script>scripts\setDefendPoint.gml</script>
       <script>scripts\clearDefendPoint.gml</script>
+      <script>scripts\nearestValidCoverSpot.gml</script>
     </scripts>
     <scripts name="State Conflict Logic">
       <script>scripts\canDrawFirearm.gml</script>
@@ -249,12 +252,17 @@
       <script>scripts\canDie.gml</script>
       <script>scripts\canStun.gml</script>
       <script>scripts\canWalk.gml</script>
+      <script>scripts\canMove.gml</script>
     </scripts>
     <scripts name="Situation Logic">
       <script>scripts\isFacingTargetThreshold.gml</script>
       <script>scripts\isFacingTarget.gml</script>
       <script>scripts\hasLineOfSight.gml</script>
       <script>scripts\inWeaponRange.gml</script>
+      <script>scripts\distance.gml</script>
+    </scripts>
+    <scripts name="CoverSpot Logic">
+      <script>scripts\evalSightedFactions.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -307,6 +315,7 @@
     <objects name="UI">
       <object>objects\obj_dropdown</object>
     </objects>
+    <object>objects\obj_coverspot</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_debug</room>

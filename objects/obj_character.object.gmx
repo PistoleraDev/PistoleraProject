@@ -571,6 +571,48 @@ AIMeleeDelay= 0; //time an AI will take between melee attacks
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>throttles</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>maxCoverThrottle=room_speed/3;
+coverThrottle=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="1">
       <action>
@@ -3216,13 +3258,9 @@ AIMeleeDelay= 0; //time an AI will take between melee attacks
             <kind>1</kind>
             <string>if !pause
 {
-    if movement_state=='idle' || movement_state=='dead' ||movement_state=='stunned'
+    if !canMove() || movement_state=='idle'
     {
-            if path_exists(path)
-           {
-           path_clear_points(path);
-           } 
-           
+            moveStop();
             if abs(xspeed)&gt;0.1
            {
            xspeed*=weight_modifier;
@@ -4089,7 +4127,7 @@ AIMeleeDelay= 0; //time an AI will take between melee attacks
                     {
                     behaviour_state='moveandshoot';
                     }
-                    else if point_distance(x,y,action_target.x,action_target.y)&lt;999 //todo, replace with a variable that is based on enemy stats
+                    else if point_distance(x,y,action_target.x,action_target.y)&lt;5 //todo, replace with a variable that is based on enemy stats
                     {
                     behaviour_state='moveandmelee';
                     }
@@ -4515,6 +4553,132 @@ AIMeleeDelay= 0; //time an AI will take between melee attacks
                     moveToTarget(action_target,max_speed);
                     //facePath(rotation_smoothing);
                 }
+            }
+        }
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>AI Cover behaviour</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Cover and Reload</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if !dead
+{
+    if !pause
+    {
+        if control=='ai'
+        {
+            if behaviour_state=='coverandreload'
+            {   
+                if coverThrottle&lt;=0
+                {
+                            move_target = nearestValidCoverSpot();
+                            action_target = move_target;
+                            coverThrottle=maxCoverThrottle;
+                }
+                else
+                {
+                coverThrottle--;
+                }
+                
+                if distance(action_target)&lt;10
+                {
+                    moveStop();
+                    if canReload()
+                    {
+                    action_trigger='reload';
+                    }
+                }
+                else
+                {
+                    moveToTarget(action_target);
+                }
+
+            //todo
             }
         }
     }
