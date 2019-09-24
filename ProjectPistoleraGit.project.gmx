@@ -264,6 +264,10 @@
     <scripts name="CoverSpot Logic">
       <script>scripts\evalSightedFactions.gml</script>
     </scripts>
+    <script>scripts\script179.gml</script>
+    <scripts name="Debug Methods">
+      <script>scripts\DrawArrayDebug.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="barriers">
