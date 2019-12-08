@@ -1655,6 +1655,16 @@ coverThrottle=0;
                     inst_hat.anim_countdown=-1;
                     inst_weaponL.anim_countdown=-1;
                     inst_weaponR.anim_countdown=-1;
+                if firearm_R[0]&gt;-1
+                {
+                firearm_inventory_squish(firearm_R[0],firearm_R[1]);
+                firearm_R=create_array(-1,0);
+                }
+                if firearm_L[0]&gt;-1
+                {
+                firearm_inventory_squish(firearm_L[0],firearm_L[1]);
+                firearm_L=create_array(-1,0);
+                }
                 
             }
     }
@@ -1710,12 +1720,6 @@ coverThrottle=0;
         {
         anim_end=false;
         }
-        else if firearm_L[0]&gt;-1 &amp;&amp; firearm_L[1]&lt;=0
-        {
-        anim_end=false;
-        firearm_R=firearm_L;
-        firearm_L=create_array(-1,0);
-        }
         else if peekempty[0]&gt;-1
         {
         anim_end=false;
@@ -1756,7 +1760,7 @@ coverThrottle=0;
                 inst_weaponR.anim_countdown=-1;
                 if peekempty[0]&gt;-1
                 {
-                action_state='reloading';//continue in the reloading state
+                //action_trigger='reload';
                 }
                 else
                 {
@@ -1767,7 +1771,7 @@ coverThrottle=0;
         }
         else //an empty firearm couldn't be found in inventory.
         {
-        action_state='idle'
+        action_trigger='idle'
         }
         //todo: we'll probably need a different reload anim for long guns.
         
@@ -4123,20 +4127,38 @@ coverThrottle=0;
                 choose_action_target();
                 if instance_exists(action_target)
                 {
+                    var noreload=false;
+                    
+                    
                     if  firearm_fullinventory_anyshots()
                     {
                     behaviour_state='moveandshoot';
+                        if action_trigger == 'reload'
+                        {
+                        action_trigger='';
+                        }
+                        if action_state =='reloading'
+                        {
+                        action_state='idle';
+                        }
+                    noreload=true;
                     }
-                    else if point_distance(x,y,action_target.x,action_target.y)&lt;5 //todo, replace with a variable that is based on enemy stats
+                    if point_distance(x,y,action_target.x,action_target.y)&lt;5 //todo, replace with a variable that is based on enemy stats
                     {
                     behaviour_state='moveandmelee';
+                        if action_trigger == 'reload'
+                        {
+                        action_trigger='';
+                        }
+                        if action_state =='reloading'
+                        {
+                        action_state='idle';
+                        }
+                    noreload=true;
                     }
-                    else
+                    if (noreload==false)
                     {
-                    behaviour_state='coverandreload';
-                    //todo: there will be more factors at work here.
-                    //Some enemies will always try for melee after running out of bullets.
-                    //Some enemies won't bother going for cover.                    
+                    behaviour_state='coverandreload';                
                     }
                 }
                 else
@@ -4204,6 +4226,15 @@ coverThrottle=0;
                     if firearm_fullinventory_anyshots()
                     {
                     behaviour_state='holdandshoot';
+                    
+                        if action_trigger == 'reload'
+                        {
+                        action_trigger='';
+                        }
+                        if action_state =='reloading'
+                        {
+                        action_state='idle';
+                        }
                     }
                     else
                     {
@@ -4657,7 +4688,6 @@ coverThrottle=0;
                 if coverThrottle&lt;=0
                 {
                             move_target = nearestValidCoverSpot();
-                            action_target = move_target;
                             coverThrottle=maxCoverThrottle;
                 }
                 else
@@ -4665,19 +4695,19 @@ coverThrottle=0;
                 coverThrottle--;
                 }
                 
-                if distance(action_target)&lt;10
+                if distance(move_target)&lt;10
                 {
                     moveStop();
-                    /*
+                    
                     if canReload()
                     {
                     action_trigger='reload';
                     }
-                    */
+                    
                 }
                 else
                 {
-                    moveToTarget(action_target);
+                    moveToTarget(move_target);
                 }
 
             //todo

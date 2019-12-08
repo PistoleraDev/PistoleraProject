@@ -98,7 +98,7 @@
     <instance objName="obj_barrier_solid" x="544" y="96" name="inst_3F9DF96C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="512" y="96" name="inst_141FBC38" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_debug_character" x="192" y="160" name="inst_67C79D2B" locked="0" code="control='player';&#xA;hitpoints=999999;&#xA;faction_id=1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_debug_character" x="928" y="672" name="inst_B1F1DA4A" locked="0" code="control='ai';&#xA;faction_id=2;&#xA;debug=1;&#xA;movement_state='walking';&#xA;hitpoints=9999999;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_debug_character" x="928" y="672" name="inst_B1F1DA4A" locked="0" code="control='ai';&#xA;faction_id=2;&#xA;debug=1;&#xA;movement_state='walking';&#xA;hitpoints=9999999;&#xA;reload_style='reload';&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="0" y="0" name="inst_D7D043E9" locked="0" code="" scaleX="32" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="0" y="32" name="inst_83B32B8E" locked="0" code="" scaleX="1" scaleY="23" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="160" y="512" name="inst_95768694" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
