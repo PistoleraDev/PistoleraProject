@@ -46,34 +46,8 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
+obj_character_Initialise();
 
-control='player';
-// none=no process controls this, auto= AI controls this, player= player controls this, cinematic= cinematic logic controls this
-
-
-walk_speed=5; //maximum speed while walking.
-
-
-character_index=0; //index to be grabbed from a stats list to populate values
-
-
-anim_countdown=-1; //countdown of animation. a value of -1 means animation starts initiliased.
-
-anim_variant=1; //number that indicates what variant of an animation should be used, to allow for different animations.
-
-
-faction_id=1; //faction for the character. Characters in same faction cannot hurt or target each other.
-
-character_id='debug_character'; //defines which character this is, e.g. luiza, spaniard musketeer..
-
-
-rotation_smoothing=0.3;//movement smoothing variable;
-
-hitpoints=1;
-
-grace_period=0; //prevents a further check for melee damage within X seconds.
-
-weapon_mode='gun'; //weapon mode variable to allow switching between melee and guns
 
 </string>
           </argument>
@@ -747,6 +721,61 @@ coverThrottle=0;
         }
     }
 
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Camera</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if !dead
+{
+    if !pause
+    {
+        if control=='player'
+        {
+            if !InstanceExists(camera)
+            {
+                obj_character_NewDynamicCamera();
+                //todo: player will be able to switch between dynamic and static camera modes.
+            }
+            obj_character_UpdateCameraPosition();
+        }
+    }
 }
 </string>
           </argument>
@@ -2615,6 +2644,7 @@ coverThrottle=0;
                                 //inst_bullet.direction=inst_weaponL.spriteangle+projectiles[i,2]; 
                             }
                         firearm_L[1]-=1; //reduce number of shots in firearm by one
+                        PlaySoundEffect(get_firearm_randomsound(firearm_id));
                     }
                 }
                 else
@@ -2723,6 +2753,7 @@ coverThrottle=0;
                                         
                                     }
                                 firearm_R[1]-=1; //reduce number of shots in firearm by one
+                                PlaySoundEffect(get_firearm_randomsound(firearm_id));
                         }
                    }
                    else

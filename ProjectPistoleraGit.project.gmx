@@ -6,6 +6,13 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\snd_debugsound</sound>
+    <sound>sound\snd_musketfire_1</sound>
+    <sound>sound\snd_musketfire_2</sound>
+    <sound>sound\snd_musketfire_3</sound>
+    <sound>sound\snd_musketfire_4</sound>
+    <sound>sound\snd_pistolfire_1</sound>
+    <sound>sound\snd_pistolfire_2</sound>
+    <sound>sound\snd_pistolfire_3</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_bluetest</sprite>
@@ -211,6 +218,7 @@
     </scripts>
     <scripts name="firearm_stats">
       <script>scripts\get_firearm_projectiles.gml</script>
+      <script>scripts\get_firearm_randomsound.gml</script>
       <script>scripts\get_firearm_islong.gml</script>
       <script>scripts\get_firearm_stats.gml</script>
       <script>scripts\get_firearm_fireduration.gml</script>
@@ -268,8 +276,32 @@
     <scripts name="Debug Methods">
       <script>scripts\DrawArrayDebug.gml</script>
     </scripts>
+    <scripts name="obj_camera_scripts">
+      <script>scripts\obj_camera_Initialise.gml</script>
+      <script>scripts\obj_camera_MakeActive.gml</script>
+      <script>scripts\obj_camera_SetPosition.gml</script>
+      <script>scripts\obj_camera_SyncView.gml</script>
+      <script>scripts\obj_camera_Delete.gml</script>
+      <script>scripts\obj_camera_SetDynamic.gml</script>
+      <script>scripts\obj_camera_SetStatic.gml</script>
+    </scripts>
+    <scripts name="errorTrapping">
+      <script>scripts\ValidateObject.gml</script>
+      <script>scripts\RequiredInstanceExists.gml</script>
+      <script>scripts\InstanceExists.gml</script>
+      <script>scripts\ReportError.gml</script>
+    </scripts>
+    <scripts name="obj_character_scripts">
+      <script>scripts\obj_character_NewCamera.gml</script>
+      <script>scripts\obj_character_NewDynamicCamera.gml</script>
+      <script>scripts\obj_character_NewStaticCamera.gml</script>
+      <script>scripts\obj_character_Initialise.gml</script>
+      <script>scripts\obj_character_UpdateCameraPosition.gml</script>
+    </scripts>
+    <script>scripts\PlaySoundEffect.gml</script>
   </scripts>
   <objects name="objects">
+    <object>objects\obj_camera</object>
     <objects name="barriers">
       <object>objects\obj_barrier_solid</object>
       <object>objects\obj_barrier_gaseous</object>

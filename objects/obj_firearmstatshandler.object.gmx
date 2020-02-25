@@ -56,6 +56,12 @@ projectiles=push_array(projectiles, create_array(0,0,-10));
 projectiles=push_array(projectiles, create_array(0,0,20));
 projectiles=push_array(projectiles, create_array(0,0,-20));*/
 
+//Contains the list of sounds the firearm can make on shooting
+var shootSounds = 0;
+shootSounds=push_array(shootSounds, snd_pistolfire_1);
+shootSounds=push_array(shootSounds, snd_pistolfire_2);
+shootSounds=push_array(shootSounds, snd_pistolfire_3);
+
 //index 0=name 1=display name, 2=damage, 3=projectiles per shot array, 
 //4=no. of shots, 5=range, 6=spread modifier, 
 //7=draw duration, 8=reload duration, 9=fire duration, 
@@ -63,15 +69,25 @@ projectiles=push_array(projectiles, create_array(0,0,-20));*/
 //13=explosion range, 14=sprite, 15=screenshake, 
 //16=soundeffect, 17=inventory space, 18=selective fire true/false, 
 //19= is long (true/false) , 20= bullet speed, 21=default no of ricochets
+//22= sounds on shooting
 firearmstats=0;
-firearmstats=push_array(firearmstats,create_array(/*name*/'flintlock',/*display name*/'flintlock pistol',/*damage*/10,/*projectile array*/array_tostring(projectiles),/*no of shots*/1,/*range*/400,/*spread modifier*/1,/*draw duration*/room_speed/8,/*reload duration*/room_speed,/*fire duration*/room_speed/16,/*knockback*/0.7,/*penetration*/false,/*projectile*/obj_bullet,/*explosion range*/0,/*sprite*/spr_flintlock,/*screenshake*/10,/*sound effect*/snd_debugsound,/*required inventory space*/1,/*selective fire*/true,/*is long*/false, /*bullet speed*/15*(60/room_speed),/*ricochets*/3) );
+firearmstats=push_array(firearmstats,create_array(/*name*/'flintlock',/*display name*/'flintlock pistol',/*damage*/10,/*projectile array*/array_tostring(projectiles),/*no of shots*/1,/*range*/400,/*spread modifier*/1,/*draw duration*/room_speed/8,/*reload duration*/room_speed,/*fire duration*/room_speed/16,/*knockback*/0.7,/*penetration*/false,/*projectile*/obj_bullet,/*explosion range*/0,/*sprite*/spr_flintlock,/*screenshake*/10,/*sound effect*/snd_debugsound,/*required inventory space*/1,/*selective fire*/true,/*is long*/false, /*bullet speed*/15*(60/room_speed),/*ricochets*/3,/*firing sounds array*/array_tostring(shootSounds)) );
 
 
 
 //musket
 var projectiles=0;
 projectiles=push_array(projectiles, create_array(0,0,0));
-firearmstats=push_array(firearmstats,create_array(/*name*/'musket',/*display name*/'musket',/*damage*/40,/*projectile array*/array_tostring(projectiles),/*no of shots*/1,/*range*/1000,/*spread modifier*/1,/*draw duration*/room_speed/6,/*reload duration*/room_speed*2,/*fire duration*/room_speed/16,/*knockback*/0.7,/*penetration*/true,/*projectile*/obj_bullet,/*explosion range*/0,/*sprite*/spr_musket,/*screenshake*/20,/*sound effect*/snd_debugsound,/*required inventory space*/2,/*selective fire*/true,/*is long*/true, /*bullet speed*/15*(60/room_speed),/*ricochets*/3) );
+
+
+var shootSounds = 0;
+shootSounds=push_array(shootSounds, snd_musketfire_1);
+shootSounds=push_array(shootSounds, snd_musketfire_2);
+shootSounds=push_array(shootSounds, snd_musketfire_3);
+
+firearmstats=push_array(firearmstats,create_array(/*name*/'musket',/*display name*/'musket',/*damage*/40,/*projectile array*/array_tostring(projectiles),/*no of shots*/1,/*range*/1000,/*spread modifier*/1,/*draw duration*/room_speed/6,/*reload duration*/room_speed*2,/*fire duration*/room_speed/16,/*knockback*/0.7,/*penetration*/true,/*projectile*/obj_bullet,/*explosion range*/0,/*sprite*/spr_musket,/*screenshake*/20,/*sound effect*/snd_debugsound,/*required inventory space*/2,/*selective fire*/true,/*is long*/true, /*bullet speed*/15*(60/room_speed),/*ricochets*/3,/*firing sounds array*/array_tostring(shootSounds)) );
+
+
 
 </string>
           </argument>

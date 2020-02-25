@@ -1,4 +1,3 @@
-#define DrawArrayDebug
 var array = argument[0];
 var out = "";
 if is_array(array)
@@ -29,5 +28,3 @@ else
     }
 }
 draw_text(x,y-20,out);
-
-#define script180
