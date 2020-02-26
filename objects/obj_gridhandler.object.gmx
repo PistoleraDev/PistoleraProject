@@ -34,6 +34,10 @@ global.projectile_grid_cellsize=global.path_grid_cellsize;
 cellsize=global.projectile_grid_cellsize;
 global.projectile_grid = mp_grid_create(0, 0, room_width / cellsize, room_height /cellsize, cellsize, cellsize);
 
+global.player_grid_cellsize=global.path_grid_cellsize;
+cellsize=global.player_grid_cellsize;
+global.player_grid = mp_grid_create(0, 0, room_width / cellsize, room_height /cellsize, cellsize, cellsize);
+
 </string>
           </argument>
         </arguments>
@@ -80,7 +84,11 @@ global.projectile_grid = mp_grid_create(0, 0, room_width / cellsize, room_height
 
 if !post_create
 {
-mp_grid_add_instances(global.path_grid, obj_barrier, 1);
+mp_grid_add_instances(global.path_grid, obj_barrier_solid, 1);
+mp_grid_add_instances(global.path_grid, obj_barrier_gaseous, 1);
+mp_grid_add_instances(global.player_grid, obj_barrier_solid, 1);
+mp_grid_add_instances(global.player_grid, obj_barrier_gaseous, 1);
+mp_grid_add_instances(global.player_grid, obj_barrier_playeronly, 1);
 mp_grid_add_instances(global.projectile_grid, obj_barrier_solid, 1);
 
 }

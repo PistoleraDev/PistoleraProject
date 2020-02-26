@@ -230,6 +230,10 @@ _speed=0;
         {
         death_countdown-=1;
         }
+        else
+        {
+        instance_destroy();
+        }
     }
 }
 </string>

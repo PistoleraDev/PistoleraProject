@@ -1129,17 +1129,35 @@ coverThrottle=0;
         i=abs(xspeed);
         while i&gt;0
         {
-            if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
+            if (control=='player')
             {
-            x+=1*(60/room_speed)*dir;
+                if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
+                {
+                x+=1*(60/room_speed)*dir;
+                }
+                else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
+                {
+                y+=1*(60/room_speed);
+                }
+                else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
+                {
+                y-=1*(60/room_speed)
+                }
             }
-            else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
+            else
             {
-            y+=1*(60/room_speed);
-            }
-            else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
-            {
-            y-=1*(60/room_speed)
+                if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
+                {
+                x+=1*(60/room_speed)*dir;
+                }
+                else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
+                {
+                y+=1*(60/room_speed);
+                }
+                else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
+                {
+                y-=1*(60/room_speed)
+                }
             }
         i-=1;
         }
@@ -1150,17 +1168,35 @@ coverThrottle=0;
         i=abs(yspeed);
         while i&gt;0
         {
-            if 0==mp_grid_get_cell(global.path_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
+            if (control=='player')
             {
-            y+=1*(60/room_speed)*dir;
+                if 0==mp_grid_get_cell(global.player_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                y+=1*(60/room_speed)*dir;
+                }
+                else if 0==mp_grid_get_cell(global.player_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                x+=1*(60/room_speed);
+                }
+                else if 0==mp_grid_get_cell(global.player_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                x-=1*(60/room_speed);
+                }
             }
-            else if 0==mp_grid_get_cell(global.path_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
+            else
             {
-            x+=1*(60/room_speed);
-            }
-            else if 0==mp_grid_get_cell(global.path_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
-            {
-            x-=1*(60/room_speed);
+                if 0==mp_grid_get_cell(global.path_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                y+=1*(60/room_speed)*dir;
+                }
+                else if 0==mp_grid_get_cell(global.path_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                x+=1*(60/room_speed);
+                }
+                else if 0==mp_grid_get_cell(global.path_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
+                {
+                x-=1*(60/room_speed);
+                }
             }
         i-=1;
         }
@@ -2081,7 +2117,7 @@ coverThrottle=0;
     if action_state=='drawing'
     {
         //todo: replace this with a proper stat
-        var draw_speed=room_speed/4;
+        var draw_speed=room_speed/10;
         var _anim_variant=anim_variant;
         switch shoot_substate
         {
@@ -2680,7 +2716,7 @@ coverThrottle=0;
                         var firedelay_done=true;
                         if shoot_substate='both'
                         {
-                        firedelay_done=(fire_delay_R&gt;=fire_duration_L/2); //require that the fire delay has reached the correct level
+                        firedelay_done=(fire_delay_R&gt;=fire_duration_L); //require that the fire delay has reached the correct level
                         }
 
                         if (firedelay_done)
@@ -2794,7 +2830,7 @@ coverThrottle=0;
             
             if shoot_substate=='both'
             {
-                if fire_delay_R&lt;fire_duration_L/2
+                if fire_delay_R&lt;fire_duration_L
                 {
                 fire_delay_R++;
                 }
@@ -4747,6 +4783,78 @@ coverThrottle=0;
     }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Clear path on pause</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if pause
+{
+moveStop();
+}
 </string>
           </argument>
         </arguments>

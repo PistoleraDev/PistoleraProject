@@ -19,6 +19,7 @@
     <sprite>sprites\spr_character_mask</sprite>
     <sprite>sprites\spr_cursor_mask</sprite>
     <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_wall_blue</sprite>
     <sprite>sprites\spr_purpletest</sprite>
     <sprite>sprites\spr_buttontest</sprite>
     <sprite>sprites\spr_slider_mask</sprite>
@@ -304,6 +305,7 @@
     <object>objects\obj_camera</object>
     <objects name="barriers">
       <object>objects\obj_barrier_solid</object>
+      <object>objects\obj_barrier_playeronly</object>
       <object>objects\obj_barrier_gaseous</object>
       <object>objects\obj_barrier</object>
     </objects>
@@ -340,8 +342,8 @@
       <object>objects\obj_character_head</object>
       <object>objects\obj_character_hat</object>
       <object>objects\obj_character</object>
-      <object>objects\obj_char_attachment</object>
       <object>objects\obj_melee_hitbox</object>
+      <object>objects\obj_char_attachment</object>
     </objects>
     <objects name="projectiles">
       <object>objects\obj_bullet</object>

@@ -289,6 +289,10 @@ fade_duration=3*room_speed;
         {
         spritealpha-= 1/fade_duration;
         }
+        else
+        {
+        instance_destroy();
+        }
     }
 }
 </string>
