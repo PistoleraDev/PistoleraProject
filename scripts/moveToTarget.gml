@@ -21,13 +21,14 @@ moveSpeed = argument[1];
 if canWalk() && instance_exists(target)
 {
 movement_state='walking';
-mp_path_to_instance(target,moveSpeed*(60/room_speed));
+return mp_path_to_instance(target,moveSpeed*(60/room_speed));
 }
 else
 {            
     if path_exists(path)
     {
     path_clear_points(path);
+    return false;
     }
 }
 

@@ -20,6 +20,7 @@
     <sprite>sprites\spr_cursor_mask</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_wall_blue</sprite>
+    <sprite>sprites\spr_wall_green</sprite>
     <sprite>sprites\spr_purpletest</sprite>
     <sprite>sprites\spr_buttontest</sprite>
     <sprite>sprites\spr_slider_mask</sprite>
@@ -285,6 +286,7 @@
       <script>scripts\obj_camera_Delete.gml</script>
       <script>scripts\obj_camera_SetDynamic.gml</script>
       <script>scripts\obj_camera_SetStatic.gml</script>
+      <script>scripts\obj_camera_SetBoundaries.gml</script>
     </scripts>
     <scripts name="errorTrapping">
       <script>scripts\ValidateObject.gml</script>
@@ -298,6 +300,7 @@
       <script>scripts\obj_character_NewStaticCamera.gml</script>
       <script>scripts\obj_character_Initialise.gml</script>
       <script>scripts\obj_character_UpdateCameraPosition.gml</script>
+      <script>scripts\obj_character_ChooseFleeSpot.gml</script>
     </scripts>
     <script>scripts\PlaySoundEffect.gml</script>
   </scripts>
@@ -354,6 +357,8 @@
       <object>objects\obj_dropdown</object>
     </objects>
     <object>objects\obj_coverspot</object>
+    <object>objects\obj_fleespot</object>
+    <object>objects\obj_viewboundary</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_debug</room>
