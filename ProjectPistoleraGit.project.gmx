@@ -142,7 +142,6 @@
     <scripts name="animations">
       <script>scripts\anim_toidle.gml</script>
       <script>scripts\anim_dead.gml</script>
-      <script>scripts\anim_reloadR_1.gml</script>
       <script>scripts\anim_toss.gml</script>
       <script>scripts\anim_idle.gml</script>
       <script>scripts\anim_debuganim2.gml</script>
@@ -181,6 +180,10 @@
       </scripts>
       <scripts name="melee">
         <script>scripts\anim_melee_sword_1.gml</script>
+      </scripts>
+      <scripts name="reloading">
+        <script>scripts\anim_reloadR_1.gml</script>
+        <script>scripts\anim_reloadLongR_1.gml</script>
       </scripts>
     </scripts>
     <script>scripts\DEV_LIST.gml</script>

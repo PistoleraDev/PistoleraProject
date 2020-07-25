@@ -47,6 +47,7 @@
             <kind>1</kind>
             <string>event_inherited();
 obj_camera_Initialise();
+obj_camera_SetBoundaries();
 </string>
           </argument>
         </arguments>

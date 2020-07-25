@@ -253,7 +253,7 @@ firearm_R=create_array(-1,0); //holds the firearms that are being held in hand.
 
 fire_delay_R=0; //a timer variable that adds a delay when firing akimbo, for 'coolness factor'
 
-reload_style='toss'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
+reload_style='reload'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
 </string>
           </argument>
         </arguments>
@@ -1796,6 +1796,7 @@ coverThrottle=0;
             if !anim_end
             {
                 reload_speed=get_firearm_reloadspeed(firearm_R[0]);
+                inst_weaponR.sprite_index=get_firearm_sprite(firearm_R[0]);
                 with inst_body {anim_reloadR_1('body',reload_speed,false)}
                 with inst_head {anim_reloadR_1('head',reload_speed,false)}
                 with inst_armL {anim_reloadR_1('armL',reload_speed,false)}
