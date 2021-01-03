@@ -69,6 +69,10 @@ thinking_state='attack';
 //action_target=move_target;
 
 show_debug_message(debugmessage);
+
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(1);
+
 </string>
           </argument>
         </arguments>
@@ -329,10 +333,9 @@ break;
           <argument>
             <kind>1</kind>
             <string>
-for (var i = 0; i&lt;10; i++)
-{
+
 firearm_inventory_adddefault(0);
-}
+
 </string>
           </argument>
         </arguments>

@@ -207,6 +207,7 @@
     </scripts>
     <scripts name="inventory">
       <script>scripts\firearm_inventory_takenext.gml</script>
+      <script>scripts\firearm_inventory_takenextNotEmpty.gml</script>
       <script>scripts\firearm_inventory_takenextempty.gml</script>
       <script>scripts\firearm_inventory_peeknextempty.gml</script>
       <script>scripts\firearm_inventory_getlength.gml</script>
@@ -214,6 +215,7 @@
       <script>scripts\firearm_inventory_getshots.gml</script>
       <script>scripts\firearm_fullinventory_getshots.gml</script>
       <script>scripts\firearm_inventory_peeknext.gml</script>
+      <script>scripts\firearm_inventory_peeknextNotEmpty.gml</script>
       <script>scripts\firearm_inventory_peeksecond.gml</script>
       <script>scripts\firearm_inventory_add.gml</script>
       <script>scripts\firearm_inventory_squish.gml</script>

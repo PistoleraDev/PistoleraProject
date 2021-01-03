@@ -1,4 +1,4 @@
-var firearm_next = firearm_inventory_peeknext();
+var firearm_next = firearm_inventory_peeknextNotEmpty();
 
 if firearm_next[0]>-1 && firearm_next[1]>0
 {

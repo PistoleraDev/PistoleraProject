@@ -16,12 +16,11 @@ var steps_taken=anim_duration-anim_countdown;
 
 
 //keyframe progression definition
-keyframes[0,0]=0.2; 
-keyframes[1,0]=0.4; 
+keyframes[0,0]=0.1; 
+keyframes[1,0]=0.5; 
 keyframes[2,0]=0.6;  
-keyframes[3,0]=0.8; 
-keyframes[4,0]=0.95;  
-keyframes[5,0]=1; 
+keyframes[3,0]=0.99; 
+keyframes[4,0]=1; 
 
 if anim_countdown>0
 {
@@ -94,42 +93,42 @@ if anim_countdown>0
             case 0:
                     target_x=0;
                     target_y=0;
-                    target_spriteangle=-30;
-                    target_xscale=0.1;
-                    target_yscale=0.1;
+                    target_spriteangle=45;
+                    target_xscale=0.5;
+                    target_yscale=0.5;
                     visible=false;
                 break;
             case 1:
-                    target_x=-0.75*sprite_width;
-                    target_y=0;
-                    target_spriteangle=-90;
+                    target_x=0;
+                    target_y=0.5*sprite_width;
+                    target_spriteangle=90;
                     target_xscale=1;
                     target_yscale=1;
                     visible=true;
                 break;
             case 2:
-                    target_x=-0.8*sprite_width;
-                    target_y=0;
-                    target_spriteangle=-90;
+                    target_x=0;
+                    target_y=0.5*sprite_width;
+                    target_spriteangle=90;
                     target_xscale=1;
                     target_yscale=1;
                     visible=true;
                 break;
             case 3:
-                    target_x=-0.5*sprite_width;
-                    target_y=0;
-                    target_spriteangle=0;
-                    target_xscale=1;
-                    target_yscale=1;
-                    visible=true;
-                break;
-            case 4:
                     target_x=0;
                     target_y=0;
-                    target_spriteangle=-30;
+                    target_spriteangle=45;
+                    target_xscale=0.5;
+                    target_yscale=0.5;
+                    visible=true;
+                break;
+            case 5:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=45;
                     target_xscale=0.1;
                     target_yscale=0.1;
-                    visible=true;
+                    visible=false;
                 break;
             }
         }
@@ -140,8 +139,29 @@ if anim_countdown>0
             case 0:
                     target_x=0;
                     target_y=0;
-                    target_spriteangle=-10;
-                    target_xscale=0.5;
+                    target_spriteangle=-20;
+                    target_xscale=0.3;
+                    target_yscale=1;
+                break;
+            case 1:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=0;
+                    target_xscale=0.7;
+                    target_yscale=1;
+                break;
+            case 2:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=-45;
+                    target_xscale=1;
+                    target_yscale=1;
+                break;
+            case 3:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=-20;
+                    target_xscale=0.3;
                     target_yscale=1;
                 break;
             }
@@ -153,8 +173,29 @@ if anim_countdown>0
             case 0:
                     target_x=0;
                     target_y=0;
-                    target_spriteangle=-45;
-                    target_xscale=0.5;
+                    target_spriteangle=90;
+                    target_xscale=1;
+                    target_yscale=1;
+                break;
+            case 1:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=0;
+                    target_xscale=0.6;
+                    target_yscale=1;
+                break;
+            case 2:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=-10;
+                    target_xscale=0.65;
+                    target_yscale=1;
+                break;
+            case 3:
+                    target_x=0;
+                    target_y=0;
+                    target_spriteangle=90;
+                    target_xscale=1;
                     target_yscale=1;
                 break;
 

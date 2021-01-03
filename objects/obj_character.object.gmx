@@ -185,11 +185,6 @@ max_firearm_inventory_length=8; //holds the amount of firearms that a character 
 /*
 for (var i=0; i&lt;max_firearm_inventory_length;i++)
 {*/
-firearm_inventory_adddefault(0);
-firearm_inventory_adddefault(1);
-firearm_inventory_adddefault(0);
-firearm_inventory_adddefault(1);
-firearm_inventory_adddefault(0);
 /*
 }*/
 
@@ -1797,12 +1792,12 @@ coverThrottle=0;
             {
                 reload_speed=get_firearm_reloadspeed(firearm_R[0]);
                 inst_weaponR.sprite_index=get_firearm_sprite(firearm_R[0]);
-                with inst_body {anim_reloadR_1('body',reload_speed,false)}
-                with inst_head {anim_reloadR_1('head',reload_speed,false)}
-                with inst_armL {anim_reloadR_1('armL',reload_speed,false)}
-                with inst_weaponL {anim_reloadR_1('weaponL',reload_speed,false)}
-                with inst_armR {anim_end=!(anim_reloadR_1('armR',reload_speed,false))}
-                with inst_weaponR {anim_reloadR_1('weaponR',reload_speed,false)}
+                with inst_body {anim_reloadLongR_1('body',reload_speed,false)}
+                with inst_head {anim_reloadLongR_1('head',reload_speed,false)}
+                with inst_armL {anim_reloadLongR_1('armL',reload_speed,false)}
+                with inst_weaponL {anim_reloadLongR_1('weaponL',reload_speed,false)}
+                with inst_armR {anim_end=!(anim_reloadLongR_1('armR',reload_speed,false))}
+                with inst_weaponR {anim_reloadLongR_1('weaponR',reload_speed,false)}
             }
             
             
@@ -2343,7 +2338,7 @@ coverThrottle=0;
                             }
                             else
                             {
-                            firearm_L=firearm_inventory_takenext();
+                            firearm_L=firearm_inventory_takenextNotEmpty();
                             }
                             if firearm_L[0]&gt;-1
                             {
@@ -2358,7 +2353,7 @@ coverThrottle=0;
                             }
                             else
                             {
-                            firearm_R=firearm_inventory_takenext();
+                            firearm_R=firearm_inventory_takenextNotEmpty();
                             }
                             if firearm_R[0]&gt;-1
                             {
