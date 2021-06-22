@@ -12,7 +12,7 @@ var target_xscale=anim_xscale;
 var target_yscale=anim_yscale;
 var target_spriteangle=anim_spriteangle;
 var current_keyframe=0;
-var steps_taken=anim_duration-anim_countdown;
+var time_taken=anim_duration-anim_countdown;
 
 
 //keyframe progression definition
@@ -28,18 +28,18 @@ if anim_countdown>0
     keyframes[i,1]=keyframes[i,0]*anim_duration;
     }
     
-    diff=keyframes[current_keyframe,1]-(steps_taken);
+    diff=keyframes[current_keyframe,1]-(time_taken);
     while diff<=0 && current_keyframe<array_height_2d(keyframes)
     {
     current_keyframe+=1;
-    diff=keyframes[current_keyframe,1]-(steps_taken);
+    diff=keyframes[current_keyframe,1]-(time_taken);
     }
     
     //keyframe definitions
     if part=='body'
         {
         
-            anim_spriteangle-=720/anim_duration;
+             anim_spriteangle-=720*global.delta;
             switch (current_keyframe)
             {
             case 0:
@@ -221,7 +221,7 @@ if anim_countdown>0
     {
     anim_spriteangle=anim_spriteangle+d_rot;
     }
-    anim_countdown-=1;
+    anim_countdown-=delta_time;
     return true;
 }
 

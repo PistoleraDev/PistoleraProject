@@ -19,6 +19,6 @@ inst.image_yscale=target_yscale;
 }
 else
 {
-inst.image_xscale += (target_xscale-image_xscale)* (1-smoothing);
-inst.image_yscale += (target_yscale-image_yscale)* (1-smoothing);
+inst.image_xscale += (target_xscale-image_xscale)* (1-smoothing) * global.delta;
+inst.image_yscale += (target_yscale-image_yscale)* (1-smoothing) * global.delta;
 }

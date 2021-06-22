@@ -53,11 +53,11 @@ character_attachment_sprites=0;
 
 //debug_character
     attachment_sprites=0
-    attachment_sprites=push_array(attachment_sprites,create_array('character_body_idle',spr_luiza_body));
-    attachment_sprites=push_array(attachment_sprites,create_array('character_armL_idle',spr_luiza_armL));
-    attachment_sprites=push_array(attachment_sprites,create_array('character_armR_idle',spr_luiza_armR));
-    attachment_sprites=push_array(attachment_sprites,create_array('character_head_idle',spr_luiza_head));
-    attachment_sprites=push_array(attachment_sprites,create_array('character_hat_idle',spr_luiza_hat));
+    attachment_sprites=push_array(attachment_sprites,create_array('character_body_idle',spr_spaniard_musketeer_body));
+    attachment_sprites=push_array(attachment_sprites,create_array('character_armL_idle',spr_spaniard_musketeer_armL));
+    attachment_sprites=push_array(attachment_sprites,create_array('character_armR_idle',spr_spaniard_musketeer_armR));
+    attachment_sprites=push_array(attachment_sprites,create_array('character_head_idle',spr_spaniard_musketeer_head));
+    attachment_sprites=push_array(attachment_sprites,create_array('character_hat_idle',spr_spaniard_musketeer_hat));
     attachment_sprites=push_array(attachment_sprites,create_array('character_head_dead',spr_luiza_head_dead));
     attachment_sprites=push_array(attachment_sprites,create_array('character_body_dead',spr_luiza_body_dead));
 //todo

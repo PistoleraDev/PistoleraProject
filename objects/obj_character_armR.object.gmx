@@ -52,8 +52,6 @@ part_id='armR';
             <string>event_inherited();
 if !post_create
 {
-idle_sprite=attachment_getsprite('character_armR_idle',character_id);
-//todo: define all needed sprites here
 
 
 sprite_index=idle_sprite;
@@ -81,11 +79,11 @@ sprite_index=idle_sprite;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>idle_sprite=attachment_getsprite('character_armR_idle',character_id);
+            <string>/*idle_sprite=attachment_getsprite('character_armR_idle',character_id);
 //todo: define all needed sprites here
 
 
-sprite_index=idle_sprite;
+sprite_index=idle_sprite;*/
 </string>
           </argument>
         </arguments>

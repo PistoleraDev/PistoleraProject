@@ -121,9 +121,7 @@ part_id='body';
 
 if !post_create
 {
-idle_sprite=attachment_getsprite('character_body_idle',character_id);
-dead_sprite=attachment_getsprite('character_body_dead',character_id);
-//todo: define all needed sprites here
+
 
 
 sprite_index=idle_sprite;

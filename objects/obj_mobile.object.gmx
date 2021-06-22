@@ -48,7 +48,7 @@
             <string>event_inherited();
 xspeed=0;
 yspeed=0;
-max_speed=5;
+max_speed=2;
 //speedangle=0;
 
 action_state='idle';//action state that defines what a mob is doing, e.g. shooting a weapon

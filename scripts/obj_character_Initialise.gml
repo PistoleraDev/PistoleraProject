@@ -7,7 +7,7 @@ control='player';
 // none=no process controls this, auto= AI controls this, player= player controls this, cinematic= cinematic logic controls this
 
 
-walk_speed=5; //maximum speed while walking.
+walk_speed=10; //maximum speed while walking. -todo, populate from handler
 
 
 character_index=0; //index to be grabbed from a stats list to populate values

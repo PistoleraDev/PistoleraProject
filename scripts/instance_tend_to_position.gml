@@ -28,7 +28,7 @@ else
     var xdiff=target_x-inst_x;
     var ydiff=target_y-inst_y;
     
-    inst.x+=(xdiff*(1-smoothing));
-    inst.y+=(ydiff*(1-smoothing));
+    inst.x+=(xdiff*(1-smoothing)) * global.delta;
+    inst.y+=(ydiff*(1-smoothing)) * global.delta;
     }
 }

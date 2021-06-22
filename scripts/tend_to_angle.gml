@@ -20,5 +20,5 @@ else
 var inst_spriteangle=inst.spriteangle;
 
 var angle_diff = angle_difference(inst_spriteangle, target_spriteangle);
-inst.spriteangle -= abs(angle_diff) * sign(angle_diff) * (1-smoothing);
+inst.spriteangle -= abs(angle_diff) * sign(angle_diff) * (1-smoothing) * global.delta;
 }

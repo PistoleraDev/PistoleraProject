@@ -53,8 +53,7 @@ part_id='armL';
 if !post_create
 {
 
-idle_sprite=attachment_getsprite('character_armL_idle',character_id);
-//todo: define all needed sprites here
+
 
 sprite_index=idle_sprite;
 

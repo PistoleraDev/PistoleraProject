@@ -89,47 +89,80 @@ obj_character_Initialise();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>inst_body=instance_create(x,y,obj_character_body);
+            <string>characterAttachments=ds_map_create();
+
+inst_body=instance_create(x,y,obj_character_body);
+
+inst_body.idle_sprite=attachment_getsprite('character_body_idle',character_id);
+inst_body.dead_sprite=attachment_getsprite('character_body_dead',character_id);
 
 inst_body.attach_point_x=0;
 inst_body.attach_point_y=0;
 inst_body.inst_parent=id;
 
+ds_map_add(characterAttachments,'body',inst_body);
+
 inst_head=instance_create(x,y,obj_character_head);
+
+inst_head.idle_sprite=attachment_getsprite('character_head_idle',character_id);
+inst_head.dead_sprite=attachment_getsprite('character_head_dead',character_id);
 
 inst_head.attach_point_x=0;
 inst_head.attach_point_y=0;
 inst_head.inst_parent=inst_body;
 
+ds_map_add(characterAttachments,'head',inst_head);
+
 inst_hat=instance_create(x,y,obj_character_hat);
+
+inst_hat.idle_sprite=attachment_getsprite('character_hat_idle',character_id);
 
 inst_hat.attach_point_x=0;
 inst_hat.attach_point_y=0;
 inst_hat.inst_parent=inst_head;
 
+
+ds_map_add(characterAttachments,'hat',inst_hat);
+
 inst_armL=instance_create(x,y,obj_character_armL);
+inst_armL.idle_sprite=attachment_getsprite('character_armL_idle',character_id);
 
 inst_armL.attach_point_x=0;
-inst_armL.attach_point_y=-19;
+inst_armL.attach_point_y=-sprite_get_height(inst_body.idle_sprite)/2;
 inst_armL.inst_parent=inst_body;
+
+
+ds_map_add(characterAttachments,'armL',inst_armL);
 
 inst_armR=instance_create(x,y,obj_character_armR);
 
+inst_armR.idle_sprite=attachment_getsprite('character_armR_idle',character_id);
+
+
 inst_armR.attach_point_x=0;
-inst_armR.attach_point_y=20;
+inst_armR.attach_point_y=sprite_get_height(inst_body.idle_sprite)/2;
 inst_armR.inst_parent=inst_body;
+
+
+ds_map_add(characterAttachments,'armR',inst_armR);
 
 inst_weaponL=instance_create(x,y,obj_character_weaponL);
 
-inst_weaponL.attach_point_x=20;
+inst_weaponL.attach_point_x=sprite_get_width(inst_armL.idle_sprite)*0.7;
 inst_weaponL.attach_point_y=0;
 inst_weaponL.inst_parent=inst_armL;
 
+
+ds_map_add(characterAttachments,'weaponL',inst_weaponL);
+
 inst_weaponR=instance_create(x,y,obj_character_weaponR);
 
-inst_weaponR.attach_point_x=20;
+inst_weaponR.attach_point_x=sprite_get_width(inst_armR.idle_sprite)*0.7;
 inst_weaponR.attach_point_y=0;
 inst_weaponR.inst_parent=inst_armR;
+
+
+ds_map_add(characterAttachments,'weaponR',inst_weaponR);
 </string>
           </argument>
         </arguments>
@@ -344,9 +377,9 @@ melee_input_held=false;
             <string>
 dodge_direction=0; //angle for character to dodge toward
 
-dodge_speed=15; //maximum speed while dodging
+dodge_speed=45; //maximum speed while dodging
 
-max_dodge_duration=room_speed/2; //amount of steps for a dodge to complete.
+max_dodge_duration=100000; //amount of time for a dodge to complete in ms.
 
 //dodge_duration=0; //countdown for the end of an initialised dodge OBSOLETE
 
@@ -396,7 +429,7 @@ stun_max=1*room_speed; //maximum that the knockback counter can rise to.
 knockback_speed=0; //a speed modifier
 
 knockback_dir=0;    //the matching direction modifier.
-weight_modifier=power(0.9,(240/room_speed)); //resistance to knockback modifier
+weight_modifier=0.8; //affects how quickly movement is arrested- lower means stronger effect
 </string>
           </argument>
         </arguments>
@@ -576,8 +609,50 @@ AIMeleeDelay= 0; //time an AI will take between melee attacks
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>maxCoverThrottle=room_speed/3;
+            <string>maxCoverThrottle=5000000; //time in ms for throttle
 coverThrottle=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>animation handling</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>currentAnim=noone;
+//filled by Animation initialisers.
 </string>
           </argument>
         </arguments>
@@ -893,7 +968,7 @@ coverThrottle=0;
 {
     if control=='ai'
     {
-            //moveToTarget(move_target);
+            moveToTarget(move_target);
     }
 }
 </string>
@@ -946,37 +1021,37 @@ coverThrottle=0;
             {
                 if (check_move_left())
                 {
-                    xspeed-=120/room_speed;
+                    xspeed-=(walk_speed/4)*global.delta;
                 }
                 if (check_move_right())
                 {
-                    xspeed+=120/room_speed;
+                    xspeed+=(walk_speed/4)*global.delta;
                 }
                 if (check_move_up())
                 {
-                    yspeed-=120/room_speed;
+                    yspeed-=(walk_speed/4)*global.delta;
                 }
                 if (check_move_down())
                 {
-                    yspeed+=120/room_speed;
+                    yspeed+=(walk_speed/4)*global.delta;
                 }
                 
-                /* activate this to have opposite keys cancel each other out
+                // activate this to have opposite keys cancel each other out
                 if (check_move_left())&amp;&amp; (check_move_right())
                 {
                     if abs(xspeed)&gt;0
                     {
-                        xspeed-=min(120/room_speed,abs(xspeed))*(xspeed/abs(xspeed));
+                        xspeed-=min((walk_speed/2)*global.delta,abs(xspeed))*(xspeed/abs(xspeed));
                     }
                 }
                 if (check_move_up())&amp;&amp; (check_move_down())
                 {
                     if abs(yspeed)&gt;0
                     {
-                        yspeed-=min(120/room_speed,abs(yspeed))*(yspeed/abs(yspeed))
+                        yspeed-=min((walk_speed/2)*global.delta,abs(yspeed))*(yspeed/abs(yspeed))
                     }
                 }
-                */
+                
                 
             }   
         }
@@ -1027,17 +1102,20 @@ coverThrottle=0;
 {
             if control=='player'
             {
-                if abs(xspeed)&gt;0 &amp;&amp; !(check_move_left() || check_move_right())
+                if (movement_state!='dodging')
                 {
-    
-                    xspeed*=weight_modifier; 
-    
-                }
-                if abs(yspeed)&gt;0 &amp;&amp; !(check_move_up() || check_move_down())
-                {
-    
-                    yspeed*=weight_modifier;
-    
+                    if abs(xspeed)&gt;0 &amp;&amp; !(check_move_left() || check_move_right())
+                    {
+        
+                        xspeed*=weight_modifier*global.delta; 
+        
+                    }
+                    if abs(yspeed)&gt;0 &amp;&amp; !(check_move_up() || check_move_down())
+                    {
+        
+                        yspeed*=weight_modifier*global.delta;
+        
+                    }
                 }
             }
 }
@@ -1084,11 +1162,11 @@ coverThrottle=0;
             <string>if !pause
 {   
         
-    if abs(xspeed)&lt;0.1
+    if abs(xspeed)&lt;0.1*global.delta
     {
     xspeed=0;
     }
-    if abs(yspeed)&lt;0.1
+    if abs(yspeed)&lt;0.1*global.delta
     {
     yspeed=0;
     }
@@ -1128,30 +1206,30 @@ coverThrottle=0;
             {
                 if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
                 {
-                x+=1*(60/room_speed)*dir;
+                x+=1*global.delta*dir;
                 }
                 else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
                 {
-                y+=1*(60/room_speed);
+                y+=1*global.delta/*(60/room_speed)*/;
                 }
                 else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
                 {
-                y-=1*(60/room_speed)
+                y-=1*global.delta/*(60/room_speed)*/
                 }
             }
             else
             {
                 if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
                 {
-                x+=1*(60/room_speed)*dir;
+                x+=1*global.delta/*(60/room_speed)*/*dir;
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
                 {
-                y+=1*(60/room_speed);
+                y+=1*global.delta/*(60/room_speed)*/;
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
                 {
-                y-=1*(60/room_speed)
+                y-=1*global.delta/*(60/room_speed)*/
                 }
             }
         i-=1;
@@ -1167,30 +1245,30 @@ coverThrottle=0;
             {
                 if 0==mp_grid_get_cell(global.player_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                y+=1*(60/room_speed)*dir;
+                y+=1*global.delta/*(60/room_speed)*/*dir;
                 }
                 else if 0==mp_grid_get_cell(global.player_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x+=1*(60/room_speed);
+                x+=1*global.delta/*(60/room_speed)*/;
                 }
                 else if 0==mp_grid_get_cell(global.player_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x-=1*(60/room_speed);
+                x-=1*global.delta/*(60/room_speed)*/;
                 }
             }
             else
             {
                 if 0==mp_grid_get_cell(global.path_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                y+=1*(60/room_speed)*dir;
+                y+=1*global.delta/*(60/room_speed)*/*dir;
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x+=1*(60/room_speed);
+                x+=1*global.delta/*(60/room_speed)*/;
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x-=1*(60/room_speed);
+                x-=1*global.delta/*(60/room_speed)*/;
                 }
             }
         i-=1;
@@ -2112,8 +2190,18 @@ coverThrottle=0;
 {
     if action_state=='drawing'
     {
+        
+        //Run animation each step, once it ends, change to aiming state.
+        if (!RunAnim(currentAnim,characterAttachments))
+        {
+        ds_map_destroy(currentAnim); //clear anim map
+        action_state='aiming';
+        }
+        
+    
+    
         //todo: replace this with a proper stat
-        var draw_speed=room_speed/10;
+       /* var draw_speed=room_speed/10;
         var _anim_variant=anim_variant;
         switch shoot_substate
         {
@@ -2155,7 +2243,7 @@ coverThrottle=0;
                 if inst_armR.anim_countdown&lt;=0 &amp;&amp; inst_armL.anim_countdown&lt;=0 
                 {action_state='aiming';}
             break;
-        }
+        }*/
 
     }
 }
@@ -2248,7 +2336,8 @@ coverThrottle=0;
                         inst_weaponL.anim_countdown=-1;
                         inst_weaponR.anim_countdown=-1;
                         
-    
+                        
+
                         var next_firearm=0
                         if firearm_R[1]&gt;0
                         {
@@ -2281,7 +2370,7 @@ coverThrottle=0;
                             {
                             shoot_substate='right';
                             }
-                            else if random(2)&gt;1
+                            else if shoot_substate=='right' //otherwise, alternate left and right
                             {
                             shoot_substate='left';
                             }
@@ -2324,6 +2413,17 @@ coverThrottle=0;
                             
                             }
                         } 
+                        
+                        
+                        //Load the appropriate animation for drawing the weapon.
+                        switch (shoot_substate)
+                        {
+                            case 'left': currentAnim=InitAnimAimL_1(100000,false);break;
+                            case 'right': currentAnim=InitAnimAimR_1(100000,false);break;
+                            case 'long': currentAnim=InitAnimAimLo_1(100000,false);break;
+                            case 'both': currentAnim=InitAnimAimB_1(100000,false);break;
+                            default: currentAnim=InitAnimAimL_1(100000,false);break;
+                        }
                         
                         
                        
@@ -4809,7 +4909,7 @@ coverThrottle=0;
                 }
                 else
                 {
-                coverThrottle--;
+                coverThrottle-=delta_time; //subtract number in ms since last step
                 }
                 
                 if distance(move_target)&lt;10

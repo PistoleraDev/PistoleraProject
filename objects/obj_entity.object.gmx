@@ -41,7 +41,7 @@ spritespeed=1;
 prepause_spritespeed=0;
 spritealpha=1;
 dead=false; //variable that holds when an entity is dead and death animation has ended.
-
+delta = 1;
 </string>
           </argument>
         </arguments>

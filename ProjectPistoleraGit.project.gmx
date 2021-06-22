@@ -36,6 +36,36 @@
         <sprite>sprites\spr_luiza_body_dead</sprite>
         <sprite>sprites\spr_luiza_head_dead</sprite>
       </sprites>
+      <sprites name="spaniards">
+        <sprites name="musketeer">
+          <sprite>sprites\spr_spaniard_musketeer_body</sprite>
+          <sprite>sprites\spr_spaniard_musketeer_armL</sprite>
+          <sprite>sprites\spr_spaniard_musketeer_armR</sprite>
+          <sprite>sprites\spr_spaniard_musketeer_hat</sprite>
+          <sprite>sprites\spr_spaniard_musketeer_head</sprite>
+        </sprites>
+        <sprites name="officer">
+          <sprite>sprites\spr_spaniard_officer_hat</sprite>
+          <sprite>sprites\spr_spaniard_officer_armL</sprite>
+          <sprite>sprites\spr_spaniard_officer_armR</sprite>
+          <sprite>sprites\spr_spaniard_officer_body</sprite>
+          <sprite>sprites\spr_spaniard_officer_head</sprite>
+        </sprites>
+        <sprites name="vagabond">
+          <sprite>sprites\spr_spaniard_vagabond_head</sprite>
+          <sprite>sprites\spr_spaniard_vagabond_body</sprite>
+          <sprite>sprites\spr_spaniard_vagabond_armL</sprite>
+          <sprite>sprites\spr_spaniard_vagabond_armR</sprite>
+          <sprite>sprites\spr_vagabond_hat</sprite>
+        </sprites>
+        <sprites name="pistolero">
+          <sprite>sprites\spr_spaniard_pistolero_hat</sprite>
+          <sprite>sprites\spr_spaniard_pistolero_body</sprite>
+          <sprite>sprites\spr_spaniard_pistolero_armL</sprite>
+          <sprite>sprites\spr_spaniard_pistolero_armR</sprite>
+          <sprite>sprites\spr_spaniard_pistoler_head</sprite>
+        </sprites>
+      </sprites>
     </sprites>
     <sprites name="weapons">
       <sprite>sprites\spr_flintlock</sprite>
@@ -49,6 +79,7 @@
     <sprite>sprites\spr_pixel</sprite>
     <sprite>sprites\spr_melee_hitbox</sprite>
     <sprite>sprites\spr_coverspot</sprite>
+    <sprite>sprites\spr_test_redcross</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -140,50 +171,77 @@
     </scripts>
     <script>scripts\attachment_getsprite.gml</script>
     <scripts name="animations">
-      <script>scripts\anim_toidle.gml</script>
-      <script>scripts\anim_dead.gml</script>
-      <script>scripts\anim_toss.gml</script>
-      <script>scripts\anim_idle.gml</script>
-      <script>scripts\anim_debuganim2.gml</script>
-      <script>scripts\anim_fuckcrazy.gml</script>
-      <scripts name="shooting">
-        <script>scripts\anim_fireLo_1.gml</script>
-        <script>scripts\anim_fireR_1.gml</script>
-        <script>scripts\anim_fireR_2.gml</script>
-        <script>scripts\anim_fireR_3.gml</script>
-        <script>scripts\anim_fireR_variant.gml</script>
-        <script>scripts\anim_fireB_variant.gml</script>
-        <script>scripts\anim_fireLo_variant.gml</script>
-        <script>scripts\anim_fireB_1.gml</script>
-        <script>scripts\anim_fireL_variant.gml</script>
-        <script>scripts\anim_fireL_1.gml</script>
-        <script>scripts\anim_fireL_2.gml</script>
+      <scripts name="new">
+        <scripts name="Animation Initialisers">
+          <scripts name="Aim">
+            <script>scripts\InitAnimAimR_1.gml</script>
+            <script>scripts\InitAnimAimR_2.gml</script>
+            <script>scripts\InitAnimAimR_3.gml</script>
+            <script>scripts\InitAnimAimL_1.gml</script>
+            <script>scripts\InitAnimAimL_2.gml</script>
+            <script>scripts\InitAnimAimLo_1.gml</script>
+            <script>scripts\InitAnimAimB_1.gml</script>
+          </scripts>
+          <scripts name="Reload">
+            <script>scripts\InitAnimReloadR_1.gml</script>
+            <script>scripts\InitAnimReloadLongR_1.gml</script>
+          </scripts>
+          <scripts name="Dodge">
+            <script>scripts\InitAnimDodge_1.gml</script>
+            <script>scripts\InitAnimDodge_2.gml</script>
+            <script>scripts\InitAnimDodge_Random.gml</script>
+          </scripts>
+        </scripts>
+        <script>scripts\RunAnim.gml</script>
+        <script>scripts\EndAnim.gml</script>
+        <script>scripts\EndLoopAnim.gml</script>
       </scripts>
-      <scripts name="aiming">
-        <script>scripts\anim_aimR_1.gml</script>
-        <script>scripts\anim_aimR_2.gml</script>
-        <script>scripts\anim_aimR_3.gml</script>
-        <script>scripts\anim_aimR_variant.gml</script>
-        <script>scripts\anim_aimLo_variant.gml</script>
-        <script>scripts\anim_aimB_variant.gml</script>
-        <script>scripts\anim_aimLo_1.gml</script>
-        <script>scripts\anim_aimL_variant.gml</script>
-        <script>scripts\anim_aimL_1.gml</script>
-        <script>scripts\anim_aimL_2.gml</script>
-        <script>scripts\anim_aimB_1.gml</script>
-        <script>scripts\anim_drawempty.gml</script>
-      </scripts>
-      <scripts name="dodging">
-        <script>scripts\anim_dodge_1.gml</script>
-        <script>scripts\anim_dodge_2.gml</script>
-        <script>scripts\anim_dodge_variant.gml</script>
-      </scripts>
-      <scripts name="melee">
-        <script>scripts\anim_melee_sword_1.gml</script>
-      </scripts>
-      <scripts name="reloading">
-        <script>scripts\anim_reloadR_1.gml</script>
-        <script>scripts\anim_reloadLongR_1.gml</script>
+      <scripts name="old">
+        <scripts name="reloading">
+          <script>scripts\anim_reloadR_1.gml</script>
+          <script>scripts\anim_reloadLongR_1.gml</script>
+        </scripts>
+        <scripts name="dodging">
+          <script>scripts\anim_dodge_1.gml</script>
+          <script>scripts\anim_dodge_2.gml</script>
+          <script>scripts\anim_dodge_variant.gml</script>
+        </scripts>
+        <scripts name="aiming">
+          <script>scripts\anim_aimR_1.gml</script>
+          <script>scripts\anim_aimR_2.gml</script>
+          <script>scripts\anim_aimR_3.gml</script>
+          <script>scripts\anim_aimR_variant.gml</script>
+          <script>scripts\anim_aimLo_variant.gml</script>
+          <script>scripts\anim_aimB_variant.gml</script>
+          <script>scripts\anim_aimLo_1.gml</script>
+          <script>scripts\anim_aimL_variant.gml</script>
+          <script>scripts\anim_aimL_1.gml</script>
+          <script>scripts\anim_aimL_2.gml</script>
+          <script>scripts\anim_aimB_1.gml</script>
+          <script>scripts\anim_drawempty.gml</script>
+        </scripts>
+        <scripts name="melee">
+          <script>scripts\anim_melee_sword_1.gml</script>
+        </scripts>
+        <scripts name="shooting">
+          <script>scripts\anim_fireLo_1.gml</script>
+          <script>scripts\anim_fireR_1.gml</script>
+          <script>scripts\anim_fireR_2.gml</script>
+          <script>scripts\anim_fireR_3.gml</script>
+          <script>scripts\anim_fireR_variant.gml</script>
+          <script>scripts\anim_fireB_variant.gml</script>
+          <script>scripts\anim_fireLo_variant.gml</script>
+          <script>scripts\anim_fireB_1.gml</script>
+          <script>scripts\anim_fireL_variant.gml</script>
+          <script>scripts\anim_fireL_1.gml</script>
+          <script>scripts\anim_fireL_2.gml</script>
+        </scripts>
+        <script>scripts\anim_toidle.gml</script>
+        <script>scripts\anim_toss.gml</script>
+        <script>scripts\anim_idle.gml</script>
+        <script>scripts\anim_fuckcrazy.gml</script>
+        <script>scripts\anim_dead.gml</script>
+        <script>scripts\anim_debuganim2.gml</script>
       </scripts>
     </scripts>
     <script>scripts\DEV_LIST.gml</script>
@@ -308,6 +366,10 @@
       <script>scripts\obj_character_ChooseFleeSpot.gml</script>
     </scripts>
     <script>scripts\PlaySoundEffect.gml</script>
+    <scripts name="Character Stats Handler">
+      <script>scripts\get_character_displayname.gml</script>
+      <script>scripts\get_character_genericstat.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <object>objects\obj_camera</object>
@@ -337,6 +399,8 @@
       <object>objects\obj_controlshandler</object>
       <object>objects\obj_firearmstatshandler</object>
       <object>objects\obj_meleestatshandler</object>
+      <object>objects\obj_characterstatshandler</object>
+      <object>objects\obj_delta_handler</object>
     </objects>
     <objects name="info holders">
       <object>objects\obj_attachment_sprites</object>
