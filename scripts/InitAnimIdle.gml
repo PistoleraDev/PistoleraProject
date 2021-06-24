@@ -11,7 +11,7 @@ ds_map_add(animMap,'end',false);
 
 //format: [part]_[property]_[keyframe]
 var keyframe = 0;
-ds_map_add(animMap,'keyframe_'+string(keyframe),0.2);
+ds_map_add(animMap,'keyframe_'+string(keyframe),1);
 
 var part = 'body'
 ds_map_add(animMap,part + '_x_' + string(keyframe),0);
@@ -20,24 +20,36 @@ ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
-part = 'weaponR'
-ds_map_add(animMap,part + '_visible_' + string(keyframe),false);
-
-
-
-part = 'armR'
+part = 'weaponL'
 ds_map_add(animMap,part + '_x_' + string(keyframe),0);
 ds_map_add(animMap,part + '_y_' + string(keyframe),0);
-ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),90);
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
-part = 'armL'
+part = 'weaponR'
+ds_map_add(animMap,part + '_x_' + string(keyframe),0);
+ds_map_add(animMap,part + '_y_' + string(keyframe),0);
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
+ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
+
+part = 'armL'
+ds_map_add(animMap,part + '_x_' + string(keyframe),0);
+ds_map_add(animMap,part + '_y_' + string(keyframe),0);
 ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),0.5);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
+part = 'armR'
+ds_map_add(animMap,part + '_x_' + string(keyframe),0);
+ds_map_add(animMap,part + '_y_' + string(keyframe),0);
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),0.5);
+ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
+
+
 part = 'head'
 ds_map_add(animMap,part + '_x_' + string(keyframe),0);
 ds_map_add(animMap,part + '_y_' + string(keyframe),0);
@@ -45,31 +57,11 @@ ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
-keyframe+=1;
-ds_map_add(animMap,'keyframe_'+string(keyframe),1);
 
-part = 'body'
+part = 'hat'
 ds_map_add(animMap,part + '_x_' + string(keyframe),0);
 ds_map_add(animMap,part + '_y_' + string(keyframe),0);
-ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),65);
-ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
-ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
-
-part = 'weaponR'
-ds_map_add(animMap,part + '_visible_' + string(keyframe),true);
-
-
-part = 'armR'
-ds_map_add(animMap,part + '_x_' + string(keyframe),0);
-ds_map_add(animMap,part + '_y_' + string(keyframe),0);
-ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),-65);
-ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
-ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
-
-part = 'head'
-ds_map_add(animMap,part + '_x_' + string(keyframe),0);
-ds_map_add(animMap,part + '_y_' + string(keyframe),0);
-ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),-65);
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 

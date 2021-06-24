@@ -1,6 +1,11 @@
 
 var noConflict = false;
 
+if (ScenarioState!='combat')
+{
+return false;
+}
+
 switch (action_state)
 {
     case 'idle' : noConflict=true;      break;

@@ -3,7 +3,7 @@ var loop= argument1;
 
 var animMap = ds_map_create();
 
-ds_map_add(animMap,'animName','InitAnimAimR_1');
+ds_map_add(animMap,'animName','InitAnimAimR_4');
 ds_map_add(animMap,'duration',duration);
 ds_map_add(animMap,'elapsed',0);
 ds_map_add(animMap,'loop',loop);
@@ -34,8 +34,8 @@ ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
 part = 'armL'
 
-ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
-ds_map_add(animMap,part + '_xscale_' + string(keyframe),0.5);
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),50);
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),0.8);
 ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 
 part = 'head'

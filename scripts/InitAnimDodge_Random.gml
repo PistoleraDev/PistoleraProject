@@ -7,9 +7,5 @@ if (rand_num==1)
 return InitAnimDodge_1(duration,loop);
 
 }
-else if (rand_num==2)
-{
-return InitAnimDodge_2(duration,loop);
-}
 
 return InitAnimDodge_1(duration,loop);

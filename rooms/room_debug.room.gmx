@@ -97,7 +97,6 @@
     <instance objName="obj_barrier_solid" x="908" y="656" name="inst_5E723FC8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="908" y="560" name="inst_3F9DF96C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="876" y="560" name="inst_141FBC38" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_debug_character" x="556" y="624" name="inst_67C79D2B" locked="0" code="control='player';&#xA;hitpoints=999999;&#xA;faction_id=1;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="524" y="976" name="inst_95768694" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="524" y="880" name="inst_C616FDD0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="556" y="944" name="inst_A8721269" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -145,6 +144,7 @@
     <instance objName="obj_fleespot" x="1856" y="1824" name="inst_615A5F05" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_fleespot" x="128" y="1792" name="inst_B459680C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_delta_handler" x="448" y="1280" name="inst_86076B21" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_debug_player" x="608" y="640" name="inst_C1B0752D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

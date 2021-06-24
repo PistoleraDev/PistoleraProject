@@ -266,7 +266,10 @@ max_melee_inventory_length=1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>max_draw_duration=room_speed/16; //defines how quickly a character draws their weapon.
+            <string>ScenarioState='combat'; //Whether a scenario is a cutscene, etc.
+//Affects what state changes are possible.
+
+max_draw_duration=room_speed/16; //defines how quickly a character draws their weapon.
 
 draw_duration=max_draw_duration;  //defines how quickly a character draws their weapon.
 
@@ -281,7 +284,7 @@ firearm_R=create_array(-1,0); //holds the firearms that are being held in hand.
 
 fire_delay_R=0; //a timer variable that adds a delay when firing akimbo, for 'coolness factor'
 
-reload_style='reload'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
+reload_style='toss'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
 </string>
           </argument>
         </arguments>
@@ -374,7 +377,9 @@ melee_input_held=false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>last_direction=0; //for holding the last known movement direction.
+
+
 dodge_direction=0; //angle for character to dodge toward
 
 dodge_speed=45; //maximum speed while dodging
@@ -475,6 +480,7 @@ shootakimbo=false;
 
 ricochet_modifier=0; //adds the number of ricochets by this. Most weapons have default ricochet of 1
 
+ContinuousFire=false; //ability to shoot continuously while holding down the mouse button
 
 //todo: check and implement these skill modifiers
 </string>
@@ -758,7 +764,7 @@ coverThrottle=0;
             }
             if canFire()
             {
-                if !check_action_weapon()
+                if ((check_action_weapon() &amp;&amp; ContinuousFire) || (check_action_weapon_pressed))
                 {
                 action_trigger='fire';
                 }
@@ -767,10 +773,10 @@ coverThrottle=0;
             {
                 if weapon_mode=='gun'
                 {
-                    if check_action_weapon()
-                    {
+                    /*if check_action_weapon() //Player now attempts to draw any time they're idle.
+                    {*/
                     action_trigger='draw';
-                    }
+                    /*}*/
                 }
             }
             if canMelee()
@@ -1277,6 +1283,11 @@ coverThrottle=0;
     
     xspeed=pre_xspeed;
     yspeed=pre_yspeed;
+    
+    if(abs(xspeed)&gt;0||abs(yspeed)&gt;0)
+    {
+    last_direction=point_direction(0,0,xspeed,yspeed);
+    }
 
 }
 
@@ -1588,30 +1599,13 @@ coverThrottle=0;
         max_speed=dodge_speed;
         xspeed=lengthdir_x(max_speed,dodge_direction);
         yspeed=lengthdir_y(max_speed,dodge_direction);
-
-            var dodge_complete=false;
-            var dodge_variant=anim_variant
-            var in_dodge_duration=max_dodge_duration;
-            with inst_body {dodge_complete=!anim_dodge_variant('body',in_dodge_duration,false,dodge_variant);}
-            with inst_armR {anim_dodge_variant('armR',in_dodge_duration,false,dodge_variant);}
-            with inst_armL {anim_dodge_variant('armL',in_dodge_duration,false,dodge_variant);}
-            with inst_weaponR {anim_dodge_variant('weaponR',in_dodge_duration,false,dodge_variant);}
-            with inst_weaponL {anim_dodge_variant('weaponL',in_dodge_duration,false,dodge_variant);}
-            with inst_head {anim_dodge_variant('head',in_dodge_duration,false,dodge_variant);}
-            with inst_hat {anim_dodge_variant('hat',in_dodge_duration,false,dodge_variant);}
-
-        if dodge_complete
+        //Run animation each step, once it ends, change out of aiming state.
+        if (!RunAnim(currentAnim,characterAttachments))
         {
             movement_state='idle';
-            action_state='idle';
-            inst_body.anim_countdown=-1;
-            inst_armR.anim_countdown=-1;
-            inst_armL.anim_countdown=-1;
-            inst_head.anim_countdown=-1;
-            inst_weaponL.anim_countdown=-1;
-            inst_weaponR.anim_countdown=-1;
-            inst_hat.anim_countdown=-1;
+            action_trigger='idle';
         }
+
     }
 }
 </string>
@@ -1661,26 +1655,14 @@ coverThrottle=0;
         if (action_trigger='dodge')
         {
  
+            currentAnim=InitAnimDodge_Random(max_dodge_duration,false);
 
-            with inst_body {anim_countdown=-1;}
-            with inst_armR {anim_countdown=-1;}
-            with inst_armL {anim_countdown=-1;}
-            with inst_weaponR {anim_countdown=-1;}
-            with inst_weaponL {anim_countdown=-1;}
-            with inst_head {anim_countdown=-1;}
-            with inst_hat {anim_countdown=-1;}
             
             movement_state='dodging';
             action_state='dodging';
             action_trigger='';
-                if xspeed!=0||yspeed!=0
-                {
-                dodge_direction=point_direction(0,0,xspeed,yspeed);
-                }
-                else
-                {
-                dodge_direction=spriteangle+ random_range(-180,180);
-                }
+            //determined in the move step;
+            dodge_direction=last_direction;
             anim_variant=ceil(random(2));
             //dodge_duration=max_dodge_duration; //OBSOLETE
             }
@@ -1903,7 +1885,7 @@ coverThrottle=0;
                 }
                 else
                 {
-                action_state='idle';
+                action_trigger='idle';
                 }
             
             }
@@ -2086,7 +2068,7 @@ coverThrottle=0;
                          firearm_R=create_array(-1,0); //reset firearm to 'null' state.
                 }  
             movement_state='idle';
-            action_state='idle';
+            action_trigger='idle';
             inst_body.anim_countdown=-1;
             inst_armR.anim_countdown=-1;
             inst_armL.anim_countdown=-1;
@@ -2197,53 +2179,6 @@ coverThrottle=0;
         ds_map_destroy(currentAnim); //clear anim map
         action_state='aiming';
         }
-        
-    
-    
-        //todo: replace this with a proper stat
-       /* var draw_speed=room_speed/10;
-        var _anim_variant=anim_variant;
-        switch shoot_substate
-        {
-            case 'left':
-                with inst_armR {anim_toidle('armR',draw_speed,false)}
-                with inst_armL {anim_aimL_variant('armL',draw_speed,false,_anim_variant)}
-                with inst_body {anim_aimL_variant('body',draw_speed,false,_anim_variant)}
-                with inst_head {anim_aimL_variant('head',draw_speed,false,_anim_variant)}
-                with inst_weaponL {anim_aimL_variant('weaponL',draw_speed,false,_anim_variant)}
-                if inst_armL.anim_countdown&lt;=0
-                {action_state='aiming';}
-            break;
-            case 'right':
-                with inst_armL {anim_toidle('armL',draw_speed,false)}
-                with inst_armR {anim_aimR_variant('armR',draw_speed,false,_anim_variant)}
-                with inst_body {anim_aimR_variant('body',draw_speed,false,_anim_variant)}
-                with inst_head {anim_aimR_variant('head',draw_speed,false,_anim_variant)}
-                with inst_weaponR {anim_aimR_variant('weaponR',draw_speed,false,_anim_variant)}
-                if inst_armR.anim_countdown&lt;=0
-                {action_state='aiming';}
-            break;
-            case 'both':
-                with inst_armR {anim_aimB_variant('armR',draw_speed,false,_anim_variant)}
-                with inst_armL {anim_aimB_variant('armL',draw_speed,false,_anim_variant)}
-                with inst_body {anim_aimB_variant('body',draw_speed,false,_anim_variant)}
-                with inst_head {anim_aimB_variant('head',draw_speed,false,_anim_variant)}
-                with inst_weaponR {anim_aimB_variant('weaponR',draw_speed,false,_anim_variant)}
-                with inst_weaponL {anim_aimB_variant('weaponL',draw_speed,false,_anim_variant)}
-                if inst_armR.anim_countdown&lt;=0 &amp;&amp; inst_armL.anim_countdown&lt;=0 
-                {action_state='aiming';}
-            break;
-            case 'long':
-                with inst_armR {anim_aimLo_variant('armR',draw_speed,false,_anim_variant)}
-                with inst_armL {anim_aimLo_variant('armL',draw_speed,false,_anim_variant)}
-                with inst_body {anim_aimLo_variant('body',draw_speed,false,_anim_variant)}
-                with inst_head {anim_aimLo_variant('head',draw_speed,false,_anim_variant)}
-                with inst_weaponR {anim_aimLo_variant('weaponR',draw_speed,false,_anim_variant)}
-                with inst_weaponL {anim_aimLo_variant('weaponL',draw_speed,false,_anim_variant)}
-                if inst_armR.anim_countdown&lt;=0 &amp;&amp; inst_armL.anim_countdown&lt;=0 
-                {action_state='aiming';}
-            break;
-        }*/
 
     }
 }
@@ -2312,7 +2247,8 @@ coverThrottle=0;
                         inst_weaponR.anim_countdown=-1;
                         }
                     }
-                    else if !firearm_fullinventory_anyshots()
+                    //Changed, we're making the combat system more standard
+                    /*else if !firearm_fullinventory_anyshots()
                     {
                         
                         action_state='drawempty'
@@ -2323,11 +2259,10 @@ coverThrottle=0;
                         inst_hat.anim_countdown=-1;
                         inst_weaponL.anim_countdown=-1;
                         inst_weaponR.anim_countdown=-1;
-                    }
+                    }*/
                     else
                     {
                         action_state='drawing';
-                        anim_variant=ceil(random(3));
                         inst_body.anim_countdown=-1;
                         inst_armR.anim_countdown=-1;
                         inst_armL.anim_countdown=-1;
@@ -2347,10 +2282,12 @@ coverThrottle=0;
                         {
                          next_firearm=firearm_L;
                         }
+
                         else
                         {
                         next_firearm=firearm_inventory_peeknext();   
                         }
+                        
                         
                         if get_firearm_islong(next_firearm[0])
                         {
@@ -2415,14 +2352,15 @@ coverThrottle=0;
                         } 
                         
                         
+                        var drawDuration=100000;
                         //Load the appropriate animation for drawing the weapon.
                         switch (shoot_substate)
                         {
-                            case 'left': currentAnim=InitAnimAimL_1(100000,false);break;
-                            case 'right': currentAnim=InitAnimAimR_1(100000,false);break;
-                            case 'long': currentAnim=InitAnimAimLo_1(100000,false);break;
-                            case 'both': currentAnim=InitAnimAimB_1(100000,false);break;
-                            default: currentAnim=InitAnimAimL_1(100000,false);break;
+                            case 'left':anim_variant=irandom_range(1,4); currentAnim=InitAnimAimL_Variant(drawDuration,false,anim_variant);break;
+                            case 'right':anim_variant=irandom_range(1,4); currentAnim=InitAnimAimR_Variant(drawDuration,false,anim_variant);break;
+                            case 'long':anim_variant=irandom_range(1,1); currentAnim=InitAnimAimLo_Variant(drawDuration,false,anim_variant);break;
+                            case 'both':anim_variant=irandom_range(1,1); currentAnim=InitAnimAimB_Variant(drawDuration,false,anim_variant);break;
+                            default: anim_variant=irandom_range(1,2); currentAnim=InitAnimAimL_Variant(drawDuration,false,anim_variant);break;
                         }
                         
                         
@@ -2577,7 +2515,7 @@ coverThrottle=0;
                 inst_hat.anim_countdown=-1;
                 inst_weaponL.anim_countdown=-1;
                 inst_weaponR.anim_countdown=-1;
-                action_state='idle';
+                action_trigger='idle';
                 }
     }
 }
@@ -2725,7 +2663,7 @@ coverThrottle=0;
             {
                 if !firing_L &amp;&amp; firearm_L[1]&gt;0
                 {   
-                    if !get_firearm_selectivefire(firearm_L[0]) || (control=='player' &amp;&amp; !check_action_weapon() ) || control=='ai' //todo: add some clause for selective firing for AI
+                    if !get_firearm_selectivefire(firearm_L[0])||control=='player' || control=='ai' //this clause is defunct since we changed how the firing system worked.
                     {
                         firing_L=true;
                         inst_weaponL.anim_countdown=-1;
@@ -2781,20 +2719,23 @@ coverThrottle=0;
                 }
                 else
                 {
+                
                     switch shoot_substate
                     {
                     case 'left':
-                    with inst_weaponL { my_id.firing_L=anim_fireL_variant('weaponL',fire_duration_L,false,_anim_variant)};
+                    firing_L=RunAnim(currentAnim,characterAttachments);
+                    /*with inst_weaponL { my_id.firing_L=anim_fireL_variant('weaponL',fire_duration_L,false,_anim_variant)};
                     with inst_armL { anim_fireL_variant('armL',fire_duration_L,false,_anim_variant)};
                     with inst_body { anim_fireL_variant('body',fire_duration_L,false,_anim_variant)};
-                    with inst_head { anim_fireL_variant('head',fire_duration_L,false,_anim_variant)};
+                    with inst_head { anim_fireL_variant('head',fire_duration_L,false,_anim_variant)};*/
                     break;
                     case 'both':
                     //todo: need anims for firing both pistols at once
-                    with inst_weaponL { my_id.firing_L=anim_fireB_variant('weaponL',fire_duration_L,false,_anim_variant)};
+                    firing_L=RunAnim(currentAnim,characterAttachments);
+                    /*with inst_weaponL { my_id.firing_L=anim_fireB_variant('weaponL',fire_duration_L,false,_anim_variant)};
                     with inst_armL { anim_fireB_variant('armL',fire_duration_L,false,_anim_variant)};
                     with inst_body { anim_fireB_variant('body',fire_duration_L,false,_anim_variant)};
-                    with inst_head { anim_fireB_variant('head',fire_duration_L,false,_anim_variant)};
+                    with inst_head { anim_fireB_variant('head',fire_duration_L,false,_anim_variant)};*/
                     break;
                     }
                     
@@ -2807,7 +2748,7 @@ coverThrottle=0;
 
                 if !firing_R &amp;&amp; firearm_R[1]&gt;0 
                 {   
-                    if !get_firearm_selectivefire(firearm_R[0]) || (control=='player' &amp;&amp; !check_action_weapon() ) || control=='ai' //todo: add some clause for selective firing for AI
+                    if !get_firearm_selectivefire(firearm_R[0]) || (control=='player' ) || control=='ai' //this clause is defunct since we changed the firing system
                     {
                         var firedelay_done=true;
                         if shoot_substate='both'
@@ -2895,25 +2836,32 @@ coverThrottle=0;
                 }
                 else
                 {
+                
+
+                
                     switch shoot_substate
                     {
                     case 'right':
-                    with inst_weaponR { my_id.firing_R=anim_fireR_variant('weaponR',fire_duration_R,false,_anim_variant)};
+                    firing_R=RunAnim(currentAnim,characterAttachments);
+                    /*with inst_weaponR { my_id.firing_R=anim_fireR_variant('weaponR',fire_duration_R,false,_anim_variant)};
                     with inst_armR { anim_fireR_variant('armR',fire_duration_R,false,_anim_variant)};
                     with inst_body { anim_fireR_variant('body',fire_duration_R,false,_anim_variant)};
-                    with inst_head { anim_fireR_variant('head',fire_duration_R,false,_anim_variant)}; 
+                    with inst_head { anim_fireR_variant('head',fire_duration_R,false,_anim_variant)}; */
                     break;
                     case 'both':
+                    firing_R=RunAnim(currentAnim,characterAttachments);/*
                     with inst_weaponR { my_id.firing_R=anim_fireB_variant('weaponR',fire_duration_R,false,_anim_variant)};
-                    with inst_armR { anim_fireB_variant('armR',fire_duration_R,false,_anim_variant)};
+                    with inst_armR { anim_fireB_variant('armR',fire_duration_R,false,_anim_variant)};*/
                     break;
                     case 'long':
+                    firing_R=RunAnim(currentAnim,characterAttachments);
+                    /*
                     with inst_weaponR { my_id.firing_R=anim_fireLo_variant('weaponR',fire_duration_R,false,_anim_variant)};
                     with inst_armR { anim_fireLo_variant('armR',fire_duration_R,false,_anim_variant)};
                     with inst_weaponL { anim_fireLo_variant('weaponL',fire_duration_R,false,_anim_variant)};
                     with inst_armL { anim_fireLo_variant('armL',fire_duration_R,false,_anim_variant)};
                     with inst_body { anim_fireLo_variant('body',fire_duration_R,false,_anim_variant)};
-                    with inst_head { anim_fireLo_variant('head',fire_duration_R,false,_anim_variant)}; 
+                    with inst_head { anim_fireLo_variant('head',fire_duration_R,false,_anim_variant)}; */
                     break;
                     }
                     
@@ -2984,27 +2932,60 @@ coverThrottle=0;
             switch shoot_substate
             {
             case 'left':
-                if !firing_L &amp;&amp; firearm_L[1]&lt;=0
+                if !firing_L  
                 {
-                exit_state=true;
+                    if (firearm_L[1]&gt;0)
+                    {
+                    action_state='aiming';
+                    }
+                    else
+                    {
+                    exit_state=true;
+                    }
+                
                 }
             break;
             case 'right':
-                if !firing_R &amp;&amp; firearm_R[1]&lt;=0
+                if !firing_R  
                 {
-                exit_state=true;
+                    if (firearm_R[1]&gt;0)
+                    {
+                    action_state='aiming';
+                    }
+                    else
+                    {
+                    exit_state=true;
+                    }
+                
                 }
             break;
             case 'both':
-                if !firing_L &amp;&amp; firearm_L[1]&lt;=0 &amp;&amp; !firing_R &amp;&amp; firearm_R[1]&lt;=0
+                if !firing_L &amp;&amp; !firing_R 
                 {
-                exit_state=true;
+                
+                    if (firearm_L[1]&gt;0 || firearm_R[1]&gt;0)
+                    {
+                    action_state='aiming';
+                    }
+                    else
+                    {
+                    exit_state=true;
+                    }
+
                 }
             break;
             case 'long':
-                if !firing_R &amp;&amp; firearm_R[1]&lt;=0
+                if !firing_R  
                 {
-                exit_state=true;
+                    if (firearm_R[1]&gt;0)
+                    {
+                    action_state='aiming';
+                    }
+                    else
+                    {
+                    exit_state=true;
+                    }
+                
                 }
             break;
             }
@@ -3018,7 +2999,7 @@ coverThrottle=0;
                 }
                 else
                 {
-                action_state='idle';
+                action_trigger='idle';
                     if firearm_L[0]&gt;-1  //if firing has ended, readd both empty firearms to the inventory.
                     {
                         firearm_inventory_add(firearm_L[0],firearm_L[1]);
@@ -3030,7 +3011,7 @@ coverThrottle=0;
                         firearm_R=create_array(-1,0);
                     }
                 }
-                
+            ds_map_destroy(currentAnim);
             inst_body.anim_countdown=-1;
             inst_armR.anim_countdown=-1;
             inst_armL.anim_countdown=-1;
@@ -3039,6 +3020,7 @@ coverThrottle=0;
             inst_weaponR.anim_countdown=-1;
             inst_hat.anim_countdown=-1;
             }
+
 
     }
 }
@@ -3099,6 +3081,16 @@ coverThrottle=0;
             inst_weaponL.anim_countdown=-1;
             inst_weaponR.anim_countdown=-1;
             fire_delay_R=0;
+                                    
+                        //Load the appropriate animation for firing the weapon.
+                        switch (shoot_substate)
+                        {
+                            case 'left':currentAnim=InitAnimFireL_Variant(100000,false,anim_variant);break;
+                            case 'right':currentAnim=InitAnimAimR_Variant(100000,false,anim_variant);break;
+                            case 'long':currentAnim=InitAnimAimLo_Variant(100000,false,anim_variant);break;
+                            case 'both':currentAnim=InitAnimAimB_Variant(100000,false,anim_variant);break;
+                            default: currentAnim=InitAnimAimL_Variant(100000,false,anim_variant);break;
+                        }
             
             }
     }
@@ -3364,21 +3356,12 @@ coverThrottle=0;
     if action_trigger=='idle'
     {
     action_trigger='';
-    action_state='idle';
+    action_state='idle';    
+    currentAnim=InitAnimIdle(300000,false);
     }
     if action_state=='idle' &amp;&amp; (movement_state=='idle'||movement_state=='walking') //todo: maybe there'll be a seperate animation for walking while idle.
     {
-        if inst_body.anim_countdown&lt;&gt;0
-        {
-            var idle_speed=room_speed/8; //todo: replace with proper variable
-            with inst_body { anim_toidle('body',idle_speed,false);};
-            with inst_armL { anim_toidle('armL',idle_speed,false);};
-            with inst_armR { anim_toidle('armR',idle_speed,false);};
-            with inst_head { anim_toidle('head',idle_speed,false);};
-            with inst_weaponL { anim_toidle('weaponL',idle_speed,false);};
-            with inst_weaponR { anim_toidle('weaponR',idle_speed,false);};
-            
-        }
+        RunAnim(currentAnim,characterAttachments);
     }
     //todo: idle while using a melee weapon will have different animations.
 
@@ -3661,7 +3644,7 @@ coverThrottle=0;
     {
         if knockback_counter&lt;=0
         {
-        action_state='idle';
+        action_trigger='idle';
         movement_state='idle';
             inst_body.anim_countdown=-1;
             inst_armR.anim_countdown=-1;
@@ -3998,7 +3981,7 @@ coverThrottle=0;
                 {
                     movement_state='idle';
                     melee_speed=0;
-                    action_state='idle';
+                    action_trigger='idle';
                     inst_body.anim_countdown=-1;
                     inst_armR.anim_countdown=-1;
                     inst_armL.anim_countdown=-1;
@@ -4352,11 +4335,11 @@ coverThrottle=0;
                     behaviour_state='moveandshoot';
                         if action_trigger == 'reload'
                         {
-                        action_trigger='';
+                        action_trigger='idle';
                         }
                         if action_state =='reloading'
                         {
-                        action_state='idle';
+                        action_trigger='idle';
                         }
                     noreload=true;
                     }
@@ -4369,7 +4352,7 @@ coverThrottle=0;
                         }
                         if action_state =='reloading'
                         {
-                        action_state='idle';
+                        action_trigger='idle';
                         }
                     noreload=true;
                     }
@@ -4446,11 +4429,11 @@ coverThrottle=0;
                     
                         if action_trigger == 'reload'
                         {
-                        action_trigger='';
+                        action_trigger='idle';
                         }
                         if action_state =='reloading'
                         {
-                        action_state='idle';
+                        action_trigger='idle';
                         }
                     }
                     else

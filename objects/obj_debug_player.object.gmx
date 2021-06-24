@@ -5,7 +5,7 @@
   <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_character</parentName>
+  <parentName>obj_player</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -339,6 +339,42 @@ break;
             <kind>1</kind>
             <string>
 
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
+firearm_inventory_adddefault(0);
 firearm_inventory_adddefault(0);
 
 </string>

@@ -41,6 +41,10 @@ keyframe+=1;
 ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),-40);
 ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
 
+keyframe = 0;
+part = 'armR'
+ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),0.5);
 
 keyframe = 0;
 part = 'head'

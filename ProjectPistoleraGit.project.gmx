@@ -80,6 +80,7 @@
     <sprite>sprites\spr_melee_hitbox</sprite>
     <sprite>sprites\spr_coverspot</sprite>
     <sprite>sprites\spr_test_redcross</sprite>
+    <sprite>sprites\spr_enemy</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -170,17 +171,24 @@
       <script>scripts\anim_debuganim.gml</script>
     </scripts>
     <script>scripts\attachment_getsprite.gml</script>
-    <scripts name="animations">
-      <scripts name="new">
+    <scripts name="Animations">
+      <scripts name="New">
         <scripts name="Animation Initialisers">
           <scripts name="Aim">
             <script>scripts\InitAnimAimR_1.gml</script>
             <script>scripts\InitAnimAimR_2.gml</script>
             <script>scripts\InitAnimAimR_3.gml</script>
+            <script>scripts\InitAnimAimR_4.gml</script>
             <script>scripts\InitAnimAimL_1.gml</script>
             <script>scripts\InitAnimAimL_2.gml</script>
+            <script>scripts\InitAnimAimL_3.gml</script>
+            <script>scripts\InitAnimAimL_4.gml</script>
             <script>scripts\InitAnimAimLo_1.gml</script>
             <script>scripts\InitAnimAimB_1.gml</script>
+            <script>scripts\InitAnimAimR_Variant.gml</script>
+            <script>scripts\InitAnimAimL_Variant.gml</script>
+            <script>scripts\InitAnimAimLo_Variant.gml</script>
+            <script>scripts\InitAnimAimB_Variant.gml</script>
           </scripts>
           <scripts name="Reload">
             <script>scripts\InitAnimReloadR_1.gml</script>
@@ -191,12 +199,31 @@
             <script>scripts\InitAnimDodge_2.gml</script>
             <script>scripts\InitAnimDodge_Random.gml</script>
           </scripts>
+          <scripts name="Fire">
+            <script>scripts\InitAnimFireLo_1.gml</script>
+            <script>scripts\InitAnimFireR_1.gml</script>
+            <script>scripts\InitAnimFireR_2.gml</script>
+            <script>scripts\InitAnimFireR_3.gml</script>
+            <script>scripts\InitAnimFireR_4.gml</script>
+            <script>scripts\InitAnimFireL_1.gml</script>
+            <script>scripts\InitAnimFireL_2.gml</script>
+            <script>scripts\InitAnimFireL_3.gml</script>
+            <script>scripts\InitAnimFireL_4.gml</script>
+            <script>scripts\InitAnimFireB_1.gml</script>
+            <script>scripts\InitAnimFireR_Variant.gml</script>
+            <script>scripts\InitAnimFireL_Variant.gml</script>
+            <script>scripts\InitAnimFireLo_Variant.gml</script>
+            <script>scripts\InitAnimFireB_Variant.gml</script>
+          </scripts>
+          <scripts name="Idle">
+            <script>scripts\InitAnimIdle.gml</script>
+          </scripts>
         </scripts>
         <script>scripts\RunAnim.gml</script>
         <script>scripts\EndAnim.gml</script>
         <script>scripts\EndLoopAnim.gml</script>
       </scripts>
-      <scripts name="old">
+      <scripts name="Old">
         <scripts name="reloading">
           <script>scripts\anim_reloadR_1.gml</script>
           <script>scripts\anim_reloadLongR_1.gml</script>
@@ -278,6 +305,7 @@
       <script>scripts\firearm_inventory_add.gml</script>
       <script>scripts\firearm_inventory_squish.gml</script>
       <script>scripts\firearm_inventory_adddefault.gml</script>
+      <script>scripts\firearm_inventory_addemptydefault.gml</script>
       <script>scripts\firearm_inventory_squishdefault.gml</script>
       <script>scripts\firearm_fullinventory_anyshots.gml</script>
     </scripts>
@@ -337,7 +365,6 @@
     <scripts name="CoverSpot Logic">
       <script>scripts\evalSightedFactions.gml</script>
     </scripts>
-    <script>scripts\script179.gml</script>
     <scripts name="Debug Methods">
       <script>scripts\DrawArrayDebug.gml</script>
     </scripts>
@@ -392,6 +419,7 @@
       <object>objects\obj_debug_script_tester</object>
       <object>objects\obj_debug_attachment</object>
       <object>objects\obj_debug_character</object>
+      <object>objects\obj_debug_player</object>
       <object>objects\obj_move_target_test</object>
     </objects>
     <objects name="handlers">
@@ -405,17 +433,23 @@
     <objects name="info holders">
       <object>objects\obj_attachment_sprites</object>
     </objects>
-    <objects name="character parts">
-      <object>objects\obj_character_body</object>
-      <object>objects\obj_character_armL</object>
-      <object>objects\obj_character_armR</object>
-      <object>objects\obj_character_weaponR</object>
-      <object>objects\obj_character_weaponL</object>
-      <object>objects\obj_character_head</object>
-      <object>objects\obj_character_hat</object>
-      <object>objects\obj_character</object>
+    <objects name="Character">
       <object>objects\obj_melee_hitbox</object>
-      <object>objects\obj_char_attachment</object>
+      <objects name="Attachments">
+        <object>objects\obj_character_hat</object>
+        <object>objects\obj_character_head</object>
+        <object>objects\obj_char_attachment</object>
+        <object>objects\obj_character_weaponL</object>
+        <object>objects\obj_character_weaponR</object>
+        <object>objects\obj_character_armR</object>
+        <object>objects\obj_character_armL</object>
+        <object>objects\obj_character_body</object>
+      </objects>
+      <objects name="Characters">
+        <object>objects\obj_player</object>
+        <object>objects\obj_enemy</object>
+        <object>objects\obj_character</object>
+      </objects>
     </objects>
     <objects name="projectiles">
       <object>objects\obj_bullet</object>

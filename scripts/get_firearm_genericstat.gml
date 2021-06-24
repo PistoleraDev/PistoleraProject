@@ -1,6 +1,10 @@
 var firearm_id=argument0;
 var stat_id=argument1;
 
+if (firearm_id<0)
+{
+return false;
+}
 if instance_number(obj_firearmstatshandler)<=0
 {
 instance_create(0,0,obj_firearmstatshandler);

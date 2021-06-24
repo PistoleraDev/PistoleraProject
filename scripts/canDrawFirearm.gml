@@ -1,6 +1,16 @@
 
 var noConflict = false;
 
+if (ScenarioState!='combat')
+{
+return false;
+}
+
+if( firearm_fullinventory_getshots()<1)
+{
+return false;
+}
+
 switch (action_state)
 {
     case 'idle' : noConflict=true;      break;
