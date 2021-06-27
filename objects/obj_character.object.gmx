@@ -284,7 +284,7 @@ firearm_R=create_array(-1,0); //holds the firearms that are being held in hand.
 
 fire_delay_R=0; //a timer variable that adds a delay when firing akimbo, for 'coolness factor'
 
-reload_style='toss'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
+reload_style='reload'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
 </string>
           </argument>
         </arguments>
@@ -480,7 +480,7 @@ shootakimbo=false;
 
 ricochet_modifier=0; //adds the number of ricochets by this. Most weapons have default ricochet of 1
 
-ContinuousFire=false; //ability to shoot continuously while holding down the mouse button
+ContinuousFire=true; //ability to shoot continuously while holding down the mouse button
 
 //todo: check and implement these skill modifiers
 </string>
@@ -764,7 +764,7 @@ coverThrottle=0;
             }
             if canFire()
             {
-                if ((check_action_weapon() &amp;&amp; ContinuousFire) || (check_action_weapon_pressed))
+                if ((check_action_weapon() &amp;&amp; ContinuousFire) || (check_action_weapon_pressed()))
                 {
                 action_trigger='fire';
                 }
@@ -1765,16 +1765,8 @@ coverThrottle=0;
             //todo: clause if character is using gun or melee, clause for if AI
             if action_trigger=='reload' 
             {
-                action_trigger='';
-                
-                action_state='reloading';
-                    inst_body.anim_countdown=-1;
-                    inst_armR.anim_countdown=-1;
-                    inst_armL.anim_countdown=-1;
-                    inst_head.anim_countdown=-1;
-                    inst_hat.anim_countdown=-1;
-                    inst_weaponL.anim_countdown=-1;
-                    inst_weaponR.anim_countdown=-1;
+            
+                //temporarily return held guns to inventory.
                 if firearm_R[0]&gt;-1
                 {
                 firearm_inventory_squish(firearm_R[0],firearm_R[1]);
@@ -1784,6 +1776,32 @@ coverThrottle=0;
                 {
                 firearm_inventory_squish(firearm_L[0],firearm_L[1]);
                 firearm_L=create_array(-1,0);
+                }
+                
+                var peekempty=firearm_inventory_peeknextempty();
+                if firearm_R[0]&gt;-1 &amp;&amp; firearm_R[1]&lt;=0
+                {
+                action_state='idle'
+                }
+                else if peekempty[0]&gt;-1
+                {
+                    firearm_R=firearm_inventory_takenextempty();
+                }
+        
+                action_trigger='';
+                
+                action_state='reloading';
+
+
+
+                var reload_time=1000000;
+                if get_firearm_islong(firearm_R[0])
+                {
+                currentAnim=InitAnimReloadLongR_1(reload_time,false);
+                }
+                else
+                {
+                currentAnim=InitAnimReloadR_1(reload_time,false);
                 }
                 
             }
@@ -1833,72 +1851,44 @@ coverThrottle=0;
 {
     if action_state=='reloading'
     {
-        var reload_speed=room_speed; 
-        var anim_end=true;
-        var peekempty=firearm_inventory_peeknextempty();
-        if firearm_R[0]&gt;-1 &amp;&amp; firearm_R[1]&lt;=0
-        {
-        anim_end=false;
-        }
-        else if peekempty[0]&gt;-1
-        {
-        anim_end=false;
-        firearm_R=firearm_inventory_takenextempty();
-        }
-        
-        if firearm_R[0]&gt;-1 
-        {
-            if !anim_end
+
+            
+            
+            var animRunning=RunAnim(currentAnim,characterAttachments);
+            
+            
+            if (!animRunning)
             {
-                reload_speed=get_firearm_reloadspeed(firearm_R[0]);
-                inst_weaponR.sprite_index=get_firearm_sprite(firearm_R[0]);
-                with inst_body {anim_reloadLongR_1('body',reload_speed,false)}
-                with inst_head {anim_reloadLongR_1('head',reload_speed,false)}
-                with inst_armL {anim_reloadLongR_1('armL',reload_speed,false)}
-                with inst_weaponL {anim_reloadLongR_1('weaponL',reload_speed,false)}
-                with inst_armR {anim_end=!(anim_reloadLongR_1('armR',reload_speed,false))}
-                with inst_weaponR {anim_reloadLongR_1('weaponR',reload_speed,false)}
-            }
-            
-            
-            
-            if anim_end
-            {
+                var animEnd = ds_map_find_value(currentAnim,'end');
+                if (animEnd)
+                {
+                    
+                    if firearm_R[0]&gt;-1
+                    {
+                    firearm_R[1]=get_firearm_shots(firearm_R[0]);
+                    firearm_inventory_squish(firearm_R[0],firearm_R[1]);
+                    firearm_R=create_array(-1,0);
+                    }
                 
-                if firearm_R[0]&gt;-1
-                {
-                firearm_R[1]=get_firearm_shots(firearm_R[0]);
-                firearm_inventory_squish(firearm_R[0],firearm_R[1]);
-                firearm_R=create_array(-1,0);
+                peekempty=firearm_inventory_peeknextempty(); //if there are still empty guns, keep the reload state going
+    
+                    if peekempty[0]&gt;-1
+                    {
+                    action_state='idle';
+                    action_trigger='reload'; //more guns to reload.
+                    }
+                    else
+                    {
+                    action_state='idle';
+                    }
+                
                 }
-            
-            peekempty=firearm_inventory_peeknextempty(); //if there are still empty guns, keep the reload state going
-                inst_body.anim_countdown=-1;
-                inst_armR.anim_countdown=-1;
-                inst_armL.anim_countdown=-1;
-                inst_head.anim_countdown=-1;
-                inst_weaponL.anim_countdown=-1;
-                inst_weaponR.anim_countdown=-1;
-                if peekempty[0]&gt;-1
+                else 
                 {
-                //action_trigger='reload';
+                action_state='idle'; //Something unusual happened and the reload animation failed.
                 }
-                else
-                {
-                action_trigger='idle';
-                }
-            
             }
         }
-        else //an empty firearm couldn't be found in inventory.
-        {
-        action_trigger='idle'
-        }
-        //todo: we'll probably need a different reload anim for long guns.
-        
-        
-    
-    }
 
 }
 </string>
@@ -3074,12 +3064,6 @@ coverThrottle=0;
             firing_L=false;
             firing_R=false;
             action_state='firing';
-            inst_body.anim_countdown=-1;
-            inst_armR.anim_countdown=-1;
-            inst_armL.anim_countdown=-1;
-            inst_head.anim_countdown=-1;
-            inst_weaponL.anim_countdown=-1;
-            inst_weaponR.anim_countdown=-1;
             fire_delay_R=0;
                                     
                         //Load the appropriate animation for firing the weapon.

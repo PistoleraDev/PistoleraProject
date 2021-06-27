@@ -36,7 +36,7 @@ return false;
 }
 
 var progress;
-if (elapsed>duration)
+if (elapsed>=duration)
 {
 progress=1;
 endOrLoop=true;

@@ -1,5 +1,12 @@
 var firearm_id=argument0;
 var shots=argument1;
+
+if (array_height_2d(firearm_inventory)==0)
+{
+firearm_inventory_add(firearm_id,shots);
+return(0);
+}
+
 var index=array_height_2d(firearm_inventory)-1;
 for (i=0; i<array_height_2d(firearm_inventory);i++)
 {
