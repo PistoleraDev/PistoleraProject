@@ -17,8 +17,12 @@ ds_map_add(animMap,'keyframe_'+string(keyframe),1);
 
 keyframe = 0;
 var part = 'body'
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
+ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),0);
 keyframe+=1;
+ds_map_add(animMap,part + '_xscale_' + string(keyframe),1);
+ds_map_add(animMap,part + '_yscale_' + string(keyframe),1);
 ds_map_add(animMap,part + '_spriteangle_' + string(keyframe),-65);
 
 keyframe = 0;

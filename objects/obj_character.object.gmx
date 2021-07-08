@@ -284,7 +284,9 @@ firearm_R=create_array(-1,0); //holds the firearms that are being held in hand.
 
 fire_delay_R=0; //a timer variable that adds a delay when firing akimbo, for 'coolness factor'
 
-reload_style='reload'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
+reload_style='toss'; // this handles whether the character tosses their weapon or re-adds it to inventory after firing.
+
+tossVariant ='right'; //handles which animation to init on 
 </string>
           </argument>
         </arguments>
@@ -1862,7 +1864,7 @@ coverThrottle=0;
                 var animEnd = ds_map_find_value(currentAnim,'end');
                 if (animEnd)
                 {
-                    
+                    ds_map_destroy(currentAnim);
                     if firearm_R[0]&gt;-1
                     {
                     firearm_R[1]=get_firearm_shots(firearm_R[0]);
@@ -1959,6 +1961,90 @@ coverThrottle=0;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>Enter toss state</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if !pause
+{
+
+            //todo: clause to check if firearm_inventory is empty
+            //todo: clause if character is using gun or melee, clause for if AI
+            if action_trigger=='toss' 
+            {
+                action_trigger='';
+                
+                action_state='toss';
+
+
+
+                var toss_time=100000;
+
+                tossVariant="";
+                
+                if firearm_L[1]&lt;=0 &amp;&amp; firearm_L[0]&gt;-1
+                    {
+                        tossVariant="left";
+                    }  
+                if firearm_R[1]&lt;=0 &amp;&amp; firearm_R[0]&gt;-1
+                    {
+                        if tossVariant=="left"
+                        {
+                        tossVariant="both";
+                        }
+                        else
+                        {
+                        tossVariant="right";
+                        }
+                    }
+                switch(tossVariant)
+                {
+                case "left":currentAnim=InitAnimTossLeft(toss_time,false); break;
+                case "right":currentAnim=InitAnimTossRight(toss_time,false); break;
+                case "both":currentAnim=InitAnimTossBoth(toss_time,false); break;
+                default:currentAnim=InitAnimTossBoth(toss_time,false); break;
+                }
+                
+                
+                    
+            }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>Toss away firearms state</string>
           </argument>
         </arguments>
@@ -1983,43 +2069,22 @@ coverThrottle=0;
 {
     if action_state=='toss'
     {    
-        var toss_speed=room_speed/8; //todo: replace with proper variables
         var toss_gunspeed=2;
         var toss_gunrotspeed=3;
         var toss_randomfactor=0.2;
-        var anim_end=true;
-        var throwleft=false;
-        var throwright=false;
-        if firearm_L[1]&lt;=0 &amp;&amp; firearm_L[0]&gt;-1
+        var anim_end=false;
+  
+        if (!RunAnim(currentAnim,characterAttachments))
         {
-            throwleft=true;
-        }  
-        if firearm_R[1]&lt;=0 &amp;&amp; firearm_R[0]&gt;-1
-        {
-            throwright=true;
+        anim_end=true;
         }
         
-        if throwright||throwleft
-        {
-            with inst_body { anim_end= !(anim_toss('body',toss_speed,false))}
-            with inst_head {anim_toss('head',toss_speed,false)}
-        }
-            
-        if throwleft &amp;&amp; !anim_end
-        {
-            with inst_armL {anim_end=!(anim_toss('armL',toss_speed,false))}
-            with inst_weaponL {anim_toss('weaponL',toss_speed,false)}
-        }
-            
-        if throwright &amp;&amp; !anim_end
-        {
-            with inst_armR {anim_end=!(anim_toss('armR',toss_speed,false))}
-            with inst_weaponR {anim_toss('weaponR',toss_speed,false)}
-        }
+ 
         
         if anim_end
         {
-                if throwleft
+            ds_map_destroy(currentAnim);
+                if (tossVariant=="left" || tossVariant=="both")
                 {
                         var dir=point_direction(x,y,inst_weaponL.x,inst_weaponL.y);
                         var firearm_toss=create_array(firearm_L[0],firearm_L[1]);
@@ -2038,7 +2103,7 @@ coverThrottle=0;
                          }
                          firearm_L=create_array(-1,0); //reset firearm to 'null' state.
                 }    
-                if throwright
+               if (tossVariant=="right" || tossVariant=="both")
                 {
                         var dir=point_direction(x,y,inst_weaponR.x,inst_weaponR.y);
                         var firearm_toss=create_array(firearm_R[0],firearm_R[1]);
@@ -2058,14 +2123,8 @@ coverThrottle=0;
                          firearm_R=create_array(-1,0); //reset firearm to 'null' state.
                 }  
             movement_state='idle';
+            action_state='idle';
             action_trigger='idle';
-            inst_body.anim_countdown=-1;
-            inst_armR.anim_countdown=-1;
-            inst_armL.anim_countdown=-1;
-            inst_head.anim_countdown=-1;
-            inst_weaponL.anim_countdown=-1;
-            inst_weaponR.anim_countdown=-1;
-            inst_hat.anim_countdown=-1;
          }
      }   
     }
@@ -2227,14 +2286,8 @@ coverThrottle=0;
                          // draw state has been called, character has spent pistols in hand. 
                          //If Reload style is to toss, so directs character to toss state instead before firestate can start on next step
                         {
-                            action_state='toss';
-                        inst_body.anim_countdown=-1;
-                        inst_armR.anim_countdown=-1;
-                        inst_armL.anim_countdown=-1;
-                        inst_head.anim_countdown=-1;
-                        inst_hat.anim_countdown=-1;
-                        inst_weaponL.anim_countdown=-1;
-                        inst_weaponR.anim_countdown=-1;
+                            action_trigger='toss';
+                            action_state='';
                         }
                     }
                     //Changed, we're making the combat system more standard
@@ -2485,28 +2538,11 @@ coverThrottle=0;
             <kind>1</kind>
             <string>if !pause
 {
+    //disabled, this state is no longer relevant in light of the new firing system
     if action_state=='drawempty'
     {
-                var drawempty_speed=room_speed/2; //todo, make proper variable
-                var anim_end=false;
-                with inst_armL {anim_end=!(anim_drawempty('armL',drawempty_speed,false))}
-                with inst_armR {anim_drawempty('armR',drawempty_speed,false)}
-                with inst_body {anim_drawempty('body',drawempty_speed,false)}
-                with inst_head {anim_drawempty('head',drawempty_speed,false)}
-                with inst_weaponL {anim_drawempty('weaponL',drawempty_speed,false)}
-                with inst_weaponR {anim_drawempty('weaponR',drawempty_speed,false)}
-                
-                if anim_end &amp;&amp;( (control=='player'&amp;&amp;!check_action_weapon())||control=='ai')
-                {
-                inst_body.anim_countdown=-1;
-                inst_armR.anim_countdown=-1;
-                inst_armL.anim_countdown=-1;
-                inst_head.anim_countdown=-1;
-                inst_hat.anim_countdown=-1;
-                inst_weaponL.anim_countdown=-1;
-                inst_weaponR.anim_countdown=-1;
-                action_trigger='idle';
-                }
+            action_trigger='idle';
+            
     }
 }
 </string>
@@ -2714,18 +2750,10 @@ coverThrottle=0;
                     {
                     case 'left':
                     firing_L=RunAnim(currentAnim,characterAttachments);
-                    /*with inst_weaponL { my_id.firing_L=anim_fireL_variant('weaponL',fire_duration_L,false,_anim_variant)};
-                    with inst_armL { anim_fireL_variant('armL',fire_duration_L,false,_anim_variant)};
-                    with inst_body { anim_fireL_variant('body',fire_duration_L,false,_anim_variant)};
-                    with inst_head { anim_fireL_variant('head',fire_duration_L,false,_anim_variant)};*/
                     break;
                     case 'both':
                     //todo: need anims for firing both pistols at once
                     firing_L=RunAnim(currentAnim,characterAttachments);
-                    /*with inst_weaponL { my_id.firing_L=anim_fireB_variant('weaponL',fire_duration_L,false,_anim_variant)};
-                    with inst_armL { anim_fireB_variant('armL',fire_duration_L,false,_anim_variant)};
-                    with inst_body { anim_fireB_variant('body',fire_duration_L,false,_anim_variant)};
-                    with inst_head { anim_fireB_variant('head',fire_duration_L,false,_anim_variant)};*/
                     break;
                     }
                     
@@ -2839,9 +2867,7 @@ coverThrottle=0;
                     with inst_head { anim_fireR_variant('head',fire_duration_R,false,_anim_variant)}; */
                     break;
                     case 'both':
-                    firing_R=RunAnim(currentAnim,characterAttachments);/*
-                    with inst_weaponR { my_id.firing_R=anim_fireB_variant('weaponR',fire_duration_R,false,_anim_variant)};
-                    with inst_armR { anim_fireB_variant('armR',fire_duration_R,false,_anim_variant)};*/
+                    firing_R=RunAnim(currentAnim,characterAttachments);
                     break;
                     case 'long':
                     firing_R=RunAnim(currentAnim,characterAttachments);
@@ -2985,7 +3011,7 @@ coverThrottle=0;
             
                 if reload_style=='toss'
                 {
-                action_state='toss';
+                action_trigger='toss';
                 }
                 else
                 {
@@ -3176,13 +3202,6 @@ coverThrottle=0;
         action_state='dead';
         movement_state='dead';
 
-            inst_body.anim_countdown=-1;
-            inst_armR.anim_countdown=-1;
-            inst_armL.anim_countdown=-1;
-            inst_head.anim_countdown=-1;
-            inst_hat.anim_countdown=-1;
-            inst_weaponL.anim_countdown=-1;
-            inst_weaponR.anim_countdown=-1;
         }
     }
 }
@@ -3230,19 +3249,9 @@ coverThrottle=0;
 {
         if action_state=='dead'
         {
-        var anim_end=true;
-        var death_speed=room_speed;//todo: replace with proper variable?
-        
-            with inst_body {anim_end=!(anim_dead('body',death_speed,false))}
-            with inst_head {anim_dead('head',death_speed,false)}
-            with inst_hat {anim_dead('hat',death_speed,false)}
-            with inst_armL {anim_dead('armL',death_speed,false)}
-            with inst_weaponL {anim_dead('weaponL',death_speed,false)}
-            with inst_armR {anim_dead('armR',death_speed,false)}
-            with inst_weaponR {anim_dead('weaponR',death_speed,false)}
-            
+
             dead=true;
-        //todo: there should probably be a statement for the player being dead
+        //todo: there needs to be a death animation here.
         
         
     }
@@ -3341,7 +3350,7 @@ coverThrottle=0;
     {
     action_trigger='';
     action_state='idle';    
-    currentAnim=InitAnimIdle(300000,false);
+    currentAnim=InitAnimIdle(100000,false);
     }
     if action_state=='idle' &amp;&amp; (movement_state=='idle'||movement_state=='walking') //todo: maybe there'll be a seperate animation for walking while idle.
     {
@@ -3569,14 +3578,7 @@ coverThrottle=0;
             {
                 action_state='stunned';    
                 movement_state='stunned';   
-                inst_body.anim_countdown=-1;
-                inst_armR.anim_countdown=-1;
-                inst_armL.anim_countdown=-1;
-                inst_head.anim_countdown=-1;
-                inst_weaponL.anim_countdown=-1;
-                inst_weaponR.anim_countdown=-1;
-                inst_hat.anim_countdown=-1;
-                //todo: there should probably be a stunned animation here or something
+
             }
         
         }
@@ -3630,13 +3632,6 @@ coverThrottle=0;
         {
         action_trigger='idle';
         movement_state='idle';
-            inst_body.anim_countdown=-1;
-            inst_armR.anim_countdown=-1;
-            inst_armL.anim_countdown=-1;
-            inst_head.anim_countdown=-1;
-            inst_hat.anim_countdown=-1;
-            inst_weaponL.anim_countdown=-1;
-            inst_weaponR.anim_countdown=-1;
         }
     
     }
@@ -3786,7 +3781,9 @@ coverThrottle=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if !pause
+            <string>//No longer relevant, changed weapon system
+
+/*if !pause
 {
     if control=='player'
     {
@@ -3817,7 +3814,8 @@ coverThrottle=0;
             weapon_mode='gun';
         }
     }
-}
+}*/
+
 </string>
           </argument>
         </arguments>
@@ -3894,7 +3892,7 @@ coverThrottle=0;
         melee_speed=max_melee_speed;
         melee_direction=spriteangle;
         melee_input_held=true;
-        
+        currentAnim= InitAnimMelee_Sword(melee_duration,false);
         }
     
     }
@@ -3944,42 +3942,21 @@ coverThrottle=0;
 {
     if action_state='meleeing'
     {
-
-                var melee_dur=melee_duration;
-                var anim_end=false;
-                //todo: animation variants for different weapons/attack sequences
-                with inst_armR {anim_end=!(anim_melee_sword_1('armR',melee_dur,false))}
-                with inst_armL {anim_melee_sword_1('armL',melee_dur,false)}
-                with inst_body {anim_melee_sword_1('body',melee_dur,false)}
-                with inst_head {anim_melee_sword_1('head',melee_dur,false)}
-                with inst_weaponR {anim_melee_sword_1('weaponR',melee_dur,false)}
-                with inst_weaponL {anim_melee_sword_1('weaponL',melee_dur,false)}
-                with inst_hat {anim_melee_sword_1('hat',melee_dur,false)}
-                
-                //todo: we need collision and damage detection for melee
-                //melee collisions will need a grace period, equal to the melee duration
-                //todo: melee motion trails
-                
-                
-                if anim_end
+                //Run animation each step, once it ends, change out of melee state.
+                if (!RunAnim(currentAnim,characterAttachments))
                 {
-                    movement_state='idle';
-                    melee_speed=0;
-                    action_trigger='idle';
-                    inst_body.anim_countdown=-1;
-                    inst_armR.anim_countdown=-1;
-                    inst_armL.anim_countdown=-1;
-                    inst_head.anim_countdown=-1;
-                    inst_weaponL.anim_countdown=-1;
-                    inst_weaponR.anim_countdown=-1;
-                    inst_hat.anim_countdown=-1;
-                    
-                    with inst_melee_hitbox
+                ds_map_destroy(currentAnim); //clear anim map
+                movement_state='idle';
+                melee_speed=0;
+                action_trigger='idle';
+                with inst_melee_hitbox
                     {
                     instance_destroy();
                     }
                     inst_melee_hitbox=noone;
                 }
+
+                
                 
                 
     

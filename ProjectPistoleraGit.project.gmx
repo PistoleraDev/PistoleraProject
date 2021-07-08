@@ -218,6 +218,14 @@
           <scripts name="Idle">
             <script>scripts\InitAnimIdle.gml</script>
           </scripts>
+          <scripts name="Melee">
+            <script>scripts\InitAnimMelee_Sword.gml</script>
+          </scripts>
+          <scripts name="Toss">
+            <script>scripts\InitAnimTossBoth.gml</script>
+            <script>scripts\InitAnimTossRight.gml</script>
+            <script>scripts\InitAnimTossLeft.gml</script>
+          </scripts>
         </scripts>
         <script>scripts\RunAnim.gml</script>
         <script>scripts\EndAnim.gml</script>
