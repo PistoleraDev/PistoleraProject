@@ -69,6 +69,8 @@
     </sprites>
     <sprites name="weapons">
       <sprite>sprites\spr_flintlock</sprite>
+      <sprite>sprites\spr_muzzleflashpistol</sprite>
+      <sprite>sprites\spr_fireEffect_Flintlock</sprite>
       <sprite>sprites\spr_musket</sprite>
       <sprite>sprites\spr_saber</sprite>
     </sprites>
@@ -76,15 +78,135 @@
       <sprite>sprites\spr_bullet</sprite>
       <sprite>sprites\spr_bullet_vfx_1</sprite>
     </sprites>
+    <sprites name="props">
+      <sprite>sprites\spr_prop_table_hor</sprite>
+      <sprite>sprites\spr_prop_table_ver</sprite>
+    </sprites>
     <sprite>sprites\spr_pixel</sprite>
     <sprite>sprites\spr_melee_hitbox</sprite>
     <sprite>sprites\spr_coverspot</sprite>
     <sprite>sprites\spr_test_redcross</sprite>
     <sprite>sprites\spr_enemy</sprite>
+    <sprites name="Doors">
+      <sprite>sprites\spr_prison_door</sprite>
+    </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\Tiles_Fort</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="Animations">
+      <scripts name="New">
+        <scripts name="Animation Initialisers">
+          <scripts name="Aim">
+            <script>scripts\InitAnimAimR_1.gml</script>
+            <script>scripts\InitAnimAimR_2.gml</script>
+            <script>scripts\InitAnimAimR_3.gml</script>
+            <script>scripts\InitAnimAimR_4.gml</script>
+            <script>scripts\InitAnimAimL_1.gml</script>
+            <script>scripts\InitAnimAimL_2.gml</script>
+            <script>scripts\InitAnimAimL_3.gml</script>
+            <script>scripts\InitAnimAimL_4.gml</script>
+            <script>scripts\InitAnimAimLo_1.gml</script>
+            <script>scripts\InitAnimAimB_1.gml</script>
+            <script>scripts\InitAnimAimR_Variant.gml</script>
+            <script>scripts\InitAnimAimL_Variant.gml</script>
+            <script>scripts\InitAnimAimLo_Variant.gml</script>
+            <script>scripts\InitAnimAimB_Variant.gml</script>
+          </scripts>
+          <scripts name="Reload">
+            <script>scripts\InitAnimReloadR_1.gml</script>
+            <script>scripts\InitAnimReloadLongR_1.gml</script>
+          </scripts>
+          <scripts name="Dodge">
+            <script>scripts\InitAnimDodge_1.gml</script>
+            <script>scripts\InitAnimDodge_2.gml</script>
+            <script>scripts\InitAnimDodge_Random.gml</script>
+          </scripts>
+          <scripts name="Fire">
+            <script>scripts\InitAnimFireLo_1.gml</script>
+            <script>scripts\InitAnimFireR_1.gml</script>
+            <script>scripts\InitAnimFireR_2.gml</script>
+            <script>scripts\InitAnimFireR_3.gml</script>
+            <script>scripts\InitAnimFireR_4.gml</script>
+            <script>scripts\InitAnimFireL_1.gml</script>
+            <script>scripts\InitAnimFireL_2.gml</script>
+            <script>scripts\InitAnimFireL_3.gml</script>
+            <script>scripts\InitAnimFireL_4.gml</script>
+            <script>scripts\InitAnimFireB_1.gml</script>
+            <script>scripts\InitAnimFireR_Variant.gml</script>
+            <script>scripts\InitAnimFireL_Variant.gml</script>
+            <script>scripts\InitAnimFireLo_Variant.gml</script>
+            <script>scripts\InitAnimFireB_Variant.gml</script>
+          </scripts>
+          <scripts name="Idle">
+            <script>scripts\InitAnimIdle.gml</script>
+          </scripts>
+          <scripts name="Melee">
+            <script>scripts\InitAnimMelee_Sword.gml</script>
+          </scripts>
+          <scripts name="Toss">
+            <script>scripts\InitAnimTossBoth.gml</script>
+            <script>scripts\InitAnimTossRight.gml</script>
+            <script>scripts\InitAnimTossLeft.gml</script>
+          </scripts>
+          <scripts name="Die">
+            <script>scripts\InitAnimDie_1.gml</script>
+          </scripts>
+        </scripts>
+        <script>scripts\RunAnim.gml</script>
+        <script>scripts\EndAnim.gml</script>
+        <script>scripts\EndLoopAnim.gml</script>
+      </scripts>
+      <scripts name="Old">
+        <scripts name="reloading">
+          <script>scripts\anim_reloadR_1.gml</script>
+          <script>scripts\anim_reloadLongR_1.gml</script>
+        </scripts>
+        <scripts name="dodging">
+          <script>scripts\anim_dodge_1.gml</script>
+          <script>scripts\anim_dodge_2.gml</script>
+          <script>scripts\anim_dodge_variant.gml</script>
+        </scripts>
+        <scripts name="aiming">
+          <script>scripts\anim_aimR_1.gml</script>
+          <script>scripts\anim_aimR_2.gml</script>
+          <script>scripts\anim_aimR_3.gml</script>
+          <script>scripts\anim_aimR_variant.gml</script>
+          <script>scripts\anim_aimLo_variant.gml</script>
+          <script>scripts\anim_aimB_variant.gml</script>
+          <script>scripts\anim_aimLo_1.gml</script>
+          <script>scripts\anim_aimL_variant.gml</script>
+          <script>scripts\anim_aimL_1.gml</script>
+          <script>scripts\anim_aimL_2.gml</script>
+          <script>scripts\anim_aimB_1.gml</script>
+          <script>scripts\anim_drawempty.gml</script>
+        </scripts>
+        <scripts name="melee">
+          <script>scripts\anim_melee_sword_1.gml</script>
+        </scripts>
+        <scripts name="shooting">
+          <script>scripts\anim_fireLo_1.gml</script>
+          <script>scripts\anim_fireR_1.gml</script>
+          <script>scripts\anim_fireR_2.gml</script>
+          <script>scripts\anim_fireR_3.gml</script>
+          <script>scripts\anim_fireR_variant.gml</script>
+          <script>scripts\anim_fireB_variant.gml</script>
+          <script>scripts\anim_fireLo_variant.gml</script>
+          <script>scripts\anim_fireB_1.gml</script>
+          <script>scripts\anim_fireL_variant.gml</script>
+          <script>scripts\anim_fireL_1.gml</script>
+          <script>scripts\anim_fireL_2.gml</script>
+        </scripts>
+        <script>scripts\anim_toidle.gml</script>
+        <script>scripts\anim_toss.gml</script>
+        <script>scripts\anim_idle.gml</script>
+        <script>scripts\anim_fuckcrazy.gml</script>
+        <script>scripts\anim_dead.gml</script>
+        <script>scripts\anim_debuganim2.gml</script>
+      </scripts>
+    </scripts>
     <scripts name="melee_stats">
       <script>scripts\get_melee_genericstat.gml</script>
       <script>scripts\get_melee_name.gml</script>
@@ -171,114 +293,6 @@
       <script>scripts\anim_debuganim.gml</script>
     </scripts>
     <script>scripts\attachment_getsprite.gml</script>
-    <scripts name="Animations">
-      <scripts name="New">
-        <scripts name="Animation Initialisers">
-          <scripts name="Aim">
-            <script>scripts\InitAnimAimR_1.gml</script>
-            <script>scripts\InitAnimAimR_2.gml</script>
-            <script>scripts\InitAnimAimR_3.gml</script>
-            <script>scripts\InitAnimAimR_4.gml</script>
-            <script>scripts\InitAnimAimL_1.gml</script>
-            <script>scripts\InitAnimAimL_2.gml</script>
-            <script>scripts\InitAnimAimL_3.gml</script>
-            <script>scripts\InitAnimAimL_4.gml</script>
-            <script>scripts\InitAnimAimLo_1.gml</script>
-            <script>scripts\InitAnimAimB_1.gml</script>
-            <script>scripts\InitAnimAimR_Variant.gml</script>
-            <script>scripts\InitAnimAimL_Variant.gml</script>
-            <script>scripts\InitAnimAimLo_Variant.gml</script>
-            <script>scripts\InitAnimAimB_Variant.gml</script>
-          </scripts>
-          <scripts name="Reload">
-            <script>scripts\InitAnimReloadR_1.gml</script>
-            <script>scripts\InitAnimReloadLongR_1.gml</script>
-          </scripts>
-          <scripts name="Dodge">
-            <script>scripts\InitAnimDodge_1.gml</script>
-            <script>scripts\InitAnimDodge_2.gml</script>
-            <script>scripts\InitAnimDodge_Random.gml</script>
-          </scripts>
-          <scripts name="Fire">
-            <script>scripts\InitAnimFireLo_1.gml</script>
-            <script>scripts\InitAnimFireR_1.gml</script>
-            <script>scripts\InitAnimFireR_2.gml</script>
-            <script>scripts\InitAnimFireR_3.gml</script>
-            <script>scripts\InitAnimFireR_4.gml</script>
-            <script>scripts\InitAnimFireL_1.gml</script>
-            <script>scripts\InitAnimFireL_2.gml</script>
-            <script>scripts\InitAnimFireL_3.gml</script>
-            <script>scripts\InitAnimFireL_4.gml</script>
-            <script>scripts\InitAnimFireB_1.gml</script>
-            <script>scripts\InitAnimFireR_Variant.gml</script>
-            <script>scripts\InitAnimFireL_Variant.gml</script>
-            <script>scripts\InitAnimFireLo_Variant.gml</script>
-            <script>scripts\InitAnimFireB_Variant.gml</script>
-          </scripts>
-          <scripts name="Idle">
-            <script>scripts\InitAnimIdle.gml</script>
-          </scripts>
-          <scripts name="Melee">
-            <script>scripts\InitAnimMelee_Sword.gml</script>
-          </scripts>
-          <scripts name="Toss">
-            <script>scripts\InitAnimTossBoth.gml</script>
-            <script>scripts\InitAnimTossRight.gml</script>
-            <script>scripts\InitAnimTossLeft.gml</script>
-          </scripts>
-        </scripts>
-        <script>scripts\RunAnim.gml</script>
-        <script>scripts\EndAnim.gml</script>
-        <script>scripts\EndLoopAnim.gml</script>
-      </scripts>
-      <scripts name="Old">
-        <scripts name="reloading">
-          <script>scripts\anim_reloadR_1.gml</script>
-          <script>scripts\anim_reloadLongR_1.gml</script>
-        </scripts>
-        <scripts name="dodging">
-          <script>scripts\anim_dodge_1.gml</script>
-          <script>scripts\anim_dodge_2.gml</script>
-          <script>scripts\anim_dodge_variant.gml</script>
-        </scripts>
-        <scripts name="aiming">
-          <script>scripts\anim_aimR_1.gml</script>
-          <script>scripts\anim_aimR_2.gml</script>
-          <script>scripts\anim_aimR_3.gml</script>
-          <script>scripts\anim_aimR_variant.gml</script>
-          <script>scripts\anim_aimLo_variant.gml</script>
-          <script>scripts\anim_aimB_variant.gml</script>
-          <script>scripts\anim_aimLo_1.gml</script>
-          <script>scripts\anim_aimL_variant.gml</script>
-          <script>scripts\anim_aimL_1.gml</script>
-          <script>scripts\anim_aimL_2.gml</script>
-          <script>scripts\anim_aimB_1.gml</script>
-          <script>scripts\anim_drawempty.gml</script>
-        </scripts>
-        <scripts name="melee">
-          <script>scripts\anim_melee_sword_1.gml</script>
-        </scripts>
-        <scripts name="shooting">
-          <script>scripts\anim_fireLo_1.gml</script>
-          <script>scripts\anim_fireR_1.gml</script>
-          <script>scripts\anim_fireR_2.gml</script>
-          <script>scripts\anim_fireR_3.gml</script>
-          <script>scripts\anim_fireR_variant.gml</script>
-          <script>scripts\anim_fireB_variant.gml</script>
-          <script>scripts\anim_fireLo_variant.gml</script>
-          <script>scripts\anim_fireB_1.gml</script>
-          <script>scripts\anim_fireL_variant.gml</script>
-          <script>scripts\anim_fireL_1.gml</script>
-          <script>scripts\anim_fireL_2.gml</script>
-        </scripts>
-        <script>scripts\anim_toidle.gml</script>
-        <script>scripts\anim_toss.gml</script>
-        <script>scripts\anim_idle.gml</script>
-        <script>scripts\anim_fuckcrazy.gml</script>
-        <script>scripts\anim_dead.gml</script>
-        <script>scripts\anim_debuganim2.gml</script>
-      </scripts>
-    </scripts>
     <script>scripts\DEV_LIST.gml</script>
     <scripts name="Standard Input Checks">
       <script>scripts\check_input_pressed.gml</script>
@@ -405,6 +419,9 @@
       <script>scripts\get_character_displayname.gml</script>
       <script>scripts\get_character_genericstat.gml</script>
     </scripts>
+    <scripts name="obj_door Scripts">
+      <script>scripts\ProcessDoorCollision.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <object>objects\obj_camera</object>
@@ -470,8 +487,18 @@
     <object>objects\obj_coverspot</object>
     <object>objects\obj_fleespot</object>
     <object>objects\obj_viewboundary</object>
+    <objects name="Effects">
+      <object>objects\obj_corpse</object>
+    </objects>
+    <objects name="Props">
+      <object>objects\obj_prop</object>
+      <object>objects\obj_prop_table_hor</object>
+      <object>objects\obj_prop_table_ver</object>
+    </objects>
+    <object>objects\obj_door</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room_tutorial</room>
     <room>rooms\room_debug</room>
     <room>rooms\room_keyframeeditor</room>
     <room>rooms\room_scripttesting</room>

@@ -109,6 +109,10 @@ for (i = 0; i < size; i++;)
        {ds_map_add(anim,part + '_spriteangleinit',instanceId.anim_spriteangle);}
        if !ds_map_exists(anim,part + '_visibleinit')
        {ds_map_add(anim,part + '_visibleinit',instanceId.visible);}
+       if !ds_map_exists(anim,part + '_spriteindexinit')
+       {ds_map_add(anim,part + '_spriteindexinit',instanceId.sprite_index);}
+       if !ds_map_exists(anim,part + '_imageindexinit')
+       {ds_map_add(anim,part + '_imageindexinit',instanceId.image_index);}
        
        //find anim keys for each part and apply
        var prev_x=ds_map_find_value(anim,part + '_xinit');
@@ -214,6 +218,17 @@ for (i = 0; i < size; i++;)
         instanceId.visible= ds_map_find_value(anim,part + '_visible_' + string(NextKeyFrameNum)); 
        }
        
+       if ds_map_exists(anim,part + '_spriteindex_' + string(NextKeyFrameNum))
+       {
+        instanceId.sprite_index= ds_map_find_value(anim,part + '_spriteindex_' + string(NextKeyFrameNum)); 
+       }
+       
+       
+       if ds_map_exists(anim,part + '_imageindex_' + string(NextKeyFrameNum))
+       {
+        instanceId.spritespeed=0;
+        instanceId.image_index= ds_map_find_value(anim,part + '_imageindex_' + string(NextKeyFrameNum)); 
+       }
        
        
        }

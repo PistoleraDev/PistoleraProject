@@ -78,6 +78,8 @@ i++;
 }
 //firearm_inventory_adddefault(1);
 
+hitpoints=999999;
+
 </string>
           </argument>
         </arguments>
@@ -282,39 +284,6 @@ stun_direction=0;
           <argument>
             <kind>1</kind>
             <string>hitpoints=0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="77">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>
-switch action_state
-{
-case 'aiming':
-action_trigger='fire';
-break;
-default:
-action_trigger='draw';
-break;
-}
-
 </string>
           </argument>
         </arguments>

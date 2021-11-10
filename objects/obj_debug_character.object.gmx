@@ -183,6 +183,28 @@ draw_line( x-orbital_x(0,sprite_width/2,spriteangle), y-orbital_y(0,sprite_width
         </arguments>
       </action>
     </event>
+    <event eventtype="9" enumb="112">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="9" enumb="90">
       <action>
         <libid>1</libid>
@@ -282,39 +304,6 @@ stun_direction=0;
           <argument>
             <kind>1</kind>
             <string>hitpoints=0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="77">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>
-switch action_state
-{
-case 'aiming':
-action_trigger='fire';
-break;
-default:
-action_trigger='draw';
-break;
-}
-
 </string>
           </argument>
         </arguments>

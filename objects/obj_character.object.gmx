@@ -1864,7 +1864,8 @@ coverThrottle=0;
                 var animEnd = ds_map_find_value(currentAnim,'end');
                 if (animEnd)
                 {
-                    ds_map_destroy(currentAnim);
+                    if (currentAnim!=-1){ds_map_destroy(currentAnim)}
+                    currentAnim=-1;
                     if firearm_R[0]&gt;-1
                     {
                     firearm_R[1]=get_firearm_shots(firearm_R[0]);
@@ -2083,7 +2084,8 @@ coverThrottle=0;
         
         if anim_end
         {
-            ds_map_destroy(currentAnim);
+            if (currentAnim!=-1){ds_map_destroy(currentAnim)}
+            currentAnim=-1;
                 if (tossVariant=="left" || tossVariant=="both")
                 {
                         var dir=point_direction(x,y,inst_weaponL.x,inst_weaponL.y);
@@ -2225,7 +2227,8 @@ coverThrottle=0;
         //Run animation each step, once it ends, change to aiming state.
         if (!RunAnim(currentAnim,characterAttachments))
         {
-        ds_map_destroy(currentAnim); //clear anim map
+        if (currentAnim!=-1){ds_map_destroy(currentAnim)}
+        currentAnim=-1;
         action_state='aiming';
         }
 
@@ -3027,7 +3030,8 @@ coverThrottle=0;
                         firearm_R=create_array(-1,0);
                     }
                 }
-            ds_map_destroy(currentAnim);
+           if (currentAnim!=-1){ds_map_destroy(currentAnim)}
+            currentAnim=-1;
             inst_body.anim_countdown=-1;
             inst_armR.anim_countdown=-1;
             inst_armL.anim_countdown=-1;
@@ -3199,8 +3203,11 @@ coverThrottle=0;
     {
         if hitpoints&lt;=0
         {
+
         action_state='dead';
         movement_state='dead';
+        var death_time=300000;
+        currentAnim=InitAnimDie_1(death_time,false,attachment_getsprite('character_body_dead',character_id)); 
 
         }
     }
@@ -3251,6 +3258,21 @@ coverThrottle=0;
         {
 
             dead=true;
+        //Run animation each step, once it ends, change to aiming state.
+        if (!RunAnim(currentAnim,characterAttachments))
+        {
+        if (currentAnim!=-1){ds_map_destroy(currentAnim)}
+        currentAnim=-1;
+        
+        /*Bug 0001*/
+        /*var corpse= instance_create(x,y,obj_corpse);
+        corpse.sprite_index= id.inst_body.sprite_index;
+        corpse.image_index=id.inst_body.image_index;
+        corpse.spriteangle=id.inst_body.spriteangle;
+        
+        instance_destroy();*/
+        }
+
         //todo: there needs to be a death animation here.
         
         
@@ -3945,7 +3967,8 @@ coverThrottle=0;
                 //Run animation each step, once it ends, change out of melee state.
                 if (!RunAnim(currentAnim,characterAttachments))
                 {
-                ds_map_destroy(currentAnim); //clear anim map
+                if (currentAnim!=-1){ds_map_destroy(currentAnim)}; //clear anim map
+                currentAnim=-1;
                 movement_state='idle';
                 melee_speed=0;
                 action_trigger='idle';
