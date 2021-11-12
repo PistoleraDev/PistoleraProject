@@ -112,6 +112,7 @@
     <instance objName="obj_barrier_solid" x="976" y="688" name="inst_E1666043" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="992" y="688" name="inst_1CEB143C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_barrier_solid" x="1008" y="688" name="inst_29E15C52" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_door" x="592" y="648" name="inst_1DEEB7FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="Tiles_Fort" x="544" y="736" w="32" h="32" xo="0" yo="0" id="10000009" name="inst_37102E31" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -325,14 +326,7 @@
     <tile bgName="Tiles_Fort" x="448" y="1024" w="32" h="32" xo="0" yo="32" id="10000441" name="inst_1CAC847E" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="704" y="1024" w="32" h="32" xo="0" yo="32" id="10000442" name="inst_89867422" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="448" y="832" w="32" h="32" xo="0" yo="32" id="10000443" name="inst_65D66BBD" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="576" y="640" w="32" h="32" xo="0" yo="64" id="10000444" name="inst_C9EA886A" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="608" y="640" w="32" h="32" xo="0" yo="64" id="10000445" name="inst_62C208A1" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="640" y="640" w="32" h="32" xo="0" yo="64" id="10000446" name="inst_7AF3B00A" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="672" y="640" w="32" h="32" xo="0" yo="64" id="10000447" name="inst_B68BE58B" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="704" y="640" w="32" h="32" xo="0" yo="64" id="10000448" name="inst_B160F4B5" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="736" y="640" w="32" h="32" xo="0" yo="64" id="10000449" name="inst_4EEA3DC7" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="560" y="640" w="32" h="32" xo="0" yo="64" id="10000450" name="inst_25BE0FE3" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="Tiles_Fort" x="544" y="640" w="32" h="32" xo="0" yo="64" id="10000451" name="inst_D9E43256" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="528" y="640" w="32" h="32" xo="0" yo="64" id="10000452" name="inst_B6C22667" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="512" y="640" w="32" h="32" xo="0" yo="64" id="10000453" name="inst_75735A18" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="Tiles_Fort" x="480" y="640" w="32" h="32" xo="64" yo="96" id="10000454" name="inst_40687E0C" depth="999999" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

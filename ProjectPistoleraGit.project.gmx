@@ -90,6 +90,7 @@
     <sprites name="Doors">
       <sprite>sprites\spr_prison_door</sprite>
     </sprites>
+    <sprite>sprites\spr_character_doorMask</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\Tiles_Fort</background>
@@ -421,6 +422,7 @@
     </scripts>
     <scripts name="obj_door Scripts">
       <script>scripts\ProcessDoorCollision.gml</script>
+      <script>scripts\ProcessDoorMomentum.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -475,6 +477,7 @@
         <object>objects\obj_enemy</object>
         <object>objects\obj_character</object>
       </objects>
+      <object>objects\obj_door_hitbox</object>
     </objects>
     <objects name="projectiles">
       <object>objects\obj_bullet</object>

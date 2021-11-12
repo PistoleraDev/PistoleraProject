@@ -31,5 +31,7 @@ grace_period=0; //prevents a further check for melee damage within X seconds.
 
 weapon_mode='gun'; //weapon mode variable to allow switching between melee and guns
 
+instDoorHitBox= instance_create(x,y,obj_door_hitbox);
+
 
 

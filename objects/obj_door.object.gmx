@@ -131,6 +131,7 @@
           <argument>
             <kind>1</kind>
             <string>ProcessDoorCollision();
+ProcessDoorMomentum();
 </string>
           </argument>
         </arguments>
