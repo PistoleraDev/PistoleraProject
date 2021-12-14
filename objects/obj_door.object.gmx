@@ -69,6 +69,7 @@
             <string>doorMomentum=0;
 previousMomentum=0;
 maxSwing=160;
+
 </string>
           </argument>
         </arguments>
