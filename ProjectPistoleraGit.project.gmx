@@ -81,6 +81,7 @@
     <sprites name="props">
       <sprite>sprites\spr_prop_table_hor</sprite>
       <sprite>sprites\spr_prop_table_ver</sprite>
+      <sprite>sprites\spr_prop_stairs_hor</sprite>
     </sprites>
     <sprite>sprites\spr_pixel</sprite>
     <sprite>sprites\spr_melee_hitbox</sprite>
@@ -94,6 +95,7 @@
   </sprites>
   <backgrounds name="background">
     <background>background\Tiles_Fort</background>
+    <background>background\Fort_WallCavity_Large</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -497,6 +499,7 @@
       <object>objects\obj_prop</object>
       <object>objects\obj_prop_table_hor</object>
       <object>objects\obj_prop_table_ver</object>
+      <object>objects\obj_prop_stairs_hor</object>
     </objects>
     <object>objects\obj_door</object>
   </objects>
