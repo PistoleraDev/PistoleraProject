@@ -4,7 +4,7 @@ var smoothing=argument2;
 
 if smoothing>=1
 {
-smoothing=0.99;
+smoothing=0.999;
 }
 if smoothing<0
 {
@@ -19,6 +19,7 @@ else
 {
 var inst_spriteangle=inst.spriteangle;
 
-var angle_diff = angle_difference(inst_spriteangle, target_spriteangle);
-inst.spriteangle -= abs(angle_diff) * sign(angle_diff) * (1-smoothing)*global.delta;
+var angle_diff = angle_difference(target_spriteangle,inst_spriteangle );
+
+inst.spriteangle += angle_diff *(1-smoothing);
 }

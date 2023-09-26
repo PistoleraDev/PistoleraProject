@@ -1029,34 +1029,42 @@ coverThrottle=0;
             {
                 if (check_move_left())
                 {
-                    xspeed-=(walk_speed/4)*global.delta;
+                    xspeed-= (walk_speed- abs(xspeed))*(1-walk_smoothing);
                 }
                 if (check_move_right())
                 {
-                    xspeed+=(walk_speed/4)*global.delta;
+                    xspeed+=(walk_speed- abs(xspeed))*(1-walk_smoothing);
                 }
                 if (check_move_up())
                 {
-                    yspeed-=(walk_speed/4)*global.delta;
+                    yspeed-=(walk_speed- abs(yspeed))*(1-walk_smoothing)
                 }
                 if (check_move_down())
                 {
-                    yspeed+=(walk_speed/4)*global.delta;
+                    yspeed+=(walk_speed- abs(yspeed))*(1-walk_smoothing)
                 }
                 
                 // activate this to have opposite keys cancel each other out
                 if (check_move_left())&amp;&amp; (check_move_right())
                 {
-                    if abs(xspeed)&gt;0
+                    if abs(xspeed)&gt;1
                     {
-                        xspeed-=min((walk_speed/2)*global.delta,abs(xspeed))*(xspeed/abs(xspeed));
+                        xspeed-= xspeed * (1-walk_smoothing)
+                    }
+                    else
+                    {
+                        xspeed=0;
                     }
                 }
                 if (check_move_up())&amp;&amp; (check_move_down())
                 {
-                    if abs(yspeed)&gt;0
+                    if abs(yspeed)&gt;1
                     {
-                        yspeed-=min((walk_speed/2)*global.delta,abs(yspeed))*(yspeed/abs(yspeed))
+                        yspeed-= yspeed * (1-walk_smoothing)
+                    }                    
+                    else
+                    {
+                        yspeed=0;
                     }
                 }
                 
@@ -1204,6 +1212,9 @@ coverThrottle=0;
     {
     cellsize=global.path_grid_cellsize;
     }
+    
+    var moveFactor=min(6,20*global.delta);
+    
     if (xspeed!=0)
     {
         dir=(xspeed/abs(xspeed)); //indicates polarity of xspeed
@@ -1212,32 +1223,32 @@ coverThrottle=0;
         {
             if (control=='player')
             {
-                if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
+                if GridIsFree(global.player_grid,x+(6*dir),y, cellsize)
                 {
-                x+=1*global.delta*dir;
+                x+=moveFactor*dir;
                 }
-                else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
+                else if GridIsFree(global.player_grid,x,y+6, cellsize)
                 {
-                y+=1*global.delta/*(60/room_speed)*/;
+                y+=moveFactor;
                 }
-                else if 0==mp_grid_get_cell(global.player_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
+                else if GridIsFree(global.player_grid,x,y-6, cellsize)
                 {
-                y-=1*global.delta/*(60/room_speed)*/
+                y-=moveFactor;
                 }
             }
             else
             {
-                if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y) div cellsize)
+                if GridIsFree(global.path_grid,x+(6*dir),y, cellsize)
                 {
-                x+=1*global.delta/*(60/room_speed)*/*dir;
+                x+=moveFactor*dir;
                 }
-                else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y+6) div cellsize)
+                else if GridIsFree(global.path_grid,x,y+6, cellsize)
                 {
-                y+=1*global.delta/*(60/room_speed)*/;
+                y+=moveFactor;
                 }
-                else if 0==mp_grid_get_cell(global.path_grid,(x+(6*dir)) div cellsize,(y-6) div cellsize)
+                else  if GridIsFree(global.path_grid,x,y-6, cellsize)
                 {
-                y-=1*global.delta/*(60/room_speed)*/
+                y+=moveFactor;
                 }
             }
         i-=1;
@@ -1251,32 +1262,32 @@ coverThrottle=0;
         {
             if (control=='player')
             {
-                if 0==mp_grid_get_cell(global.player_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
+                if GridIsFree(global.player_grid,x,y+(6*dir), cellsize)
                 {
-                y+=1*global.delta/*(60/room_speed)*/*dir;
+                y+=moveFactor*dir;
                 }
-                else if 0==mp_grid_get_cell(global.player_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
+                else if GridIsFree(global.player_grid,x+6,y, cellsize)
                 {
-                x+=1*global.delta/*(60/room_speed)*/;
+                x+=moveFactor;
                 }
-                else if 0==mp_grid_get_cell(global.player_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
+                else if GridIsFree(global.player_grid,x-6,y, cellsize)
                 {
-                x-=1*global.delta/*(60/room_speed)*/;
+                x-=moveFactor;
                 }
             }
             else
             {
                 if 0==mp_grid_get_cell(global.path_grid,(x) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                y+=1*global.delta/*(60/room_speed)*/*dir;
+                y+=min(6,6*global.delta)*dir;
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x+6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x+=1*global.delta/*(60/room_speed)*/;
+                x+=min(6,6*global.delta);
                 }
                 else if 0==mp_grid_get_cell(global.path_grid,(x-6) div cellsize,(y+(6*dir)) div cellsize)
                 {
-                x-=1*global.delta/*(60/room_speed)*/;
+                x-=min(6,6*global.delta);
                 }
             }
         i-=1;

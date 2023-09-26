@@ -7,8 +7,8 @@ control='player';
 // none=no process controls this, auto= AI controls this, player= player controls this, cinematic= cinematic logic controls this
 
 
-walk_speed=10; //maximum speed while walking. -todo, populate from handler
-
+walk_speed=30; //maximum speed while walking. -todo, populate from handler
+walk_smoothing=0.95;
 
 character_index=0; //index to be grabbed from a stats list to populate values
 
@@ -23,7 +23,7 @@ faction_id=1; //faction for the character. Characters in same faction cannot hur
 character_id='debug_character'; //defines which character this is, e.g. luiza, spaniard musketeer..
 
 
-rotation_smoothing=0.3;//movement smoothing variable;
+rotation_smoothing=0.9;//movement smoothing variable;
 
 hitpoints=1;
 

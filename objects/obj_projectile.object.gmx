@@ -54,7 +54,7 @@ prepause_speed=0;
 hit_detected=false;
 penetrations=0;
 ricochets=0;
-max_death_countdown=room_speed;
+max_death_countdown=2;
 death_countdown=max_death_countdown;
 damage=1;
 range=100;
@@ -228,7 +228,7 @@ _speed=0;
     {
         if death_countdown&gt;0
         {
-        death_countdown-=1;
+        death_countdown-=1*global.delta;
         }
         else
         {
@@ -370,6 +370,10 @@ _speed=0;
                     start_x=x;
                     start_y=y; 
                     }
+                }
+                else
+                {
+                hit_detected = true;
                 }
                 
 

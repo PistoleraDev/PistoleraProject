@@ -27,6 +27,6 @@ if active
     {
     y=min_y+view_hview[viewNum]*0.5;
     }
-    view_xview[viewNum]=x - view_wview[viewNum]*0.5;
-    view_yview[viewNum]=y - view_hview[viewNum]*0.5;
+    view_xview[viewNum]=round(x - view_wview[viewNum]*0.5);
+    view_yview[viewNum]=round(y - view_hview[viewNum]*0.5);
 }

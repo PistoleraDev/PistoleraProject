@@ -82,6 +82,10 @@
       <sprite>sprites\spr_prop_table_hor</sprite>
       <sprite>sprites\spr_prop_table_ver</sprite>
       <sprite>sprites\spr_prop_stairs_hor</sprite>
+      <sprite>sprites\spr_prop_lantern</sprite>
+      <sprite>sprites\spr_prop_lantern_hori</sprite>
+      <sprite>sprites\spr_prop_table_jail</sprite>
+      <sprite>sprites\spr_prop_jail_bed</sprite>
     </sprites>
     <sprite>sprites\spr_pixel</sprite>
     <sprite>sprites\spr_melee_hitbox</sprite>
@@ -90,12 +94,15 @@
     <sprite>sprites\spr_enemy</sprite>
     <sprites name="Doors">
       <sprite>sprites\spr_prison_door</sprite>
+      <sprite>sprites\spr_jail_door</sprite>
     </sprites>
     <sprite>sprites\spr_character_doorMask</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\Tiles_Fort</background>
     <background>background\Fort_WallCavity_Large</background>
+    <background>background\Tiles_WallShadow</background>
+    <background>background\background3</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -402,6 +409,7 @@
       <script>scripts\obj_camera_SetDynamic.gml</script>
       <script>scripts\obj_camera_SetStatic.gml</script>
       <script>scripts\obj_camera_SetBoundaries.gml</script>
+      <script>scripts\obj_camera_SetViewDimensions.gml</script>
     </scripts>
     <scripts name="errorTrapping">
       <script>scripts\ValidateObject.gml</script>
@@ -426,6 +434,7 @@
       <script>scripts\ProcessDoorCollision.gml</script>
       <script>scripts\ProcessDoorMomentum.gml</script>
     </scripts>
+    <script>scripts\GridIsFree.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_camera</object>
@@ -498,13 +507,17 @@
     <objects name="Props">
       <object>objects\obj_prop</object>
       <object>objects\obj_prop_table_hor</object>
+      <object>objects\obj_prop_jail_bed</object>
+      <object>objects\obj_prop_table_jail</object>
+      <object>objects\obj_prop_lantern</object>
+      <object>objects\obj_prop_lantern_hor</object>
       <object>objects\obj_prop_table_ver</object>
       <object>objects\obj_prop_stairs_hor</object>
     </objects>
     <object>objects\obj_door</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room_tutorial</room>
+    <room>rooms\room_tutorial_jail</room>
     <room>rooms\room_debug</room>
     <room>rooms\room_keyframeeditor</room>
     <room>rooms\room_scripttesting</room>
